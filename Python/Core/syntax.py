@@ -41,8 +41,13 @@ can be used as a comment when not assigned to a variable
 # ========== VARIABLE ==========
 # ==============================
 
+# Declaration
 var = 5 # variable declaration, can be any valid identifier, 
+a, b = 5, 6 # variable declaration with tuple unpacking
+a = b = 7 # variable declaration with multiple assignments, starts from the rightmost value and assigns the value to all variables on the left
+a: int = 5 # variable declaration with type hints, helps the interpreter and IDEs to understand the type of the variable
 
+# Types
 int_var = 8 # decimal literal
 int_var = 0o353 # octal literal
 int_var = 0x1A3F # hexadecimal literal
@@ -73,12 +78,6 @@ list_var = [1, 2, 3]  # List
 tuple_var = (1, 2, 3)  # Tuple
 set_var = {1, 2, 3}  # Set
 dict_var = {'key': 'value'}  # Dictionary
-
-a, b = 5, 6 # variable declaration with tuple unpacking
-
-a = b = 7 # variable declaration with multiple assignments, starts from the rightmost value and assigns the value to all variables on the left
-
-a: int = 5 # variable declaration with type hints, helps the interpreter and IDEs to understand the type of the variable
 
 
 
