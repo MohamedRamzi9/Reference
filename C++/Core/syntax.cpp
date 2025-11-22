@@ -74,6 +74,12 @@ MyStruct my_struct_var; // user-defined type
 const int const_var = 10; // must be initialized at declaration
 volatile int volatile_var;  // tells compiler can't optimize this variable
 extern int extern_var; // defined in another file
+extern "C" int c_linkage_var; // defined in another translation unit, uses C linkage for name mangling
+extern "C++" int cpp_linkage_var; // defined in another translation unit, uses C++ linkage for name mangling, this is the default
+extern "C" { // extern block with C linkage
+	int c_linkage_var1;
+}
+static int static_var; // has internal linkage, only visible in the current translation unit
 thread_local int thread_local_var; // unique to each thread
 constinit int constinit_var = 20; // must be initialized at declaration, can be changed later
 constexpr int constexpr_var = 30; // must be initialized at declaration, will be replaced at compile time
@@ -245,12 +251,9 @@ void operator delete(void* ptr) noexcept { ::operator delete[](ptr); } // overlo
 void operator delete(void* ptr, auto&&... args) noexcept { ::operator delete[](ptr); } //overload delete operator with additional parameters, called either via delete(arg...) ptr or when constructor throws in the new function with the same list of additional argument as this operator
 // the same versions of all the above exist for new[] and delete[] operators
 
-
 bool does_throw = noexcept(1 + 2); // noexcept operator
-
 int x = Namespace::x; // scope resolution operator, can be used on namespaces, classes, enums
-
-int y = auto(x), auto{x}, auto(1); // auto() and auto{} decay copy, will create a copy of x if x is not an rvalue, otherwise returns x itself
+int y = auto(x), auto{x}, auto(1); // auto() and auto{} decay copy, will create a copy of x if x is not an rvalue, otherwise returns x itself respectively
 
 
 
@@ -275,15 +278,20 @@ constexpr void constexpr_function(); // constexpr function, may be evaluated at 
 consteval void consteval_function(); // consteval function, must be evaluated at compile time
 inline void inline_function(); // inline function, suggests to the compiler to inline the function, also allows same definition in different translation units
 static void static_function(); // static function, has internal linkage
+extern void extern_function(); // extern function, defined in another translation unit
+extern "C" void c_linkage_function(int a); // extern function with C linkage for name mangling
 void overloaded_function(int a); int overloaded_function(double a); // overloaded function, same name but different parameters and return type
 void deleted_function() = delete; // deleted function, this overload cannot be called
-
 void function_definition() { // the body of the function goes here inside the curly braces
 	// function body
 }
 void static_variable_function() { // static variables in functions, retain their value between calls
 	static int static_var = 0;
 }
+void try_catch_function() try { // function with try-catch block
+	throw 1;
+} catch (int e) { }
+overloaded_function(10); // function call with int argument, chooses the correct overload
 
 
 
@@ -317,7 +325,11 @@ protected: // protected access specifier, members are accessible from inside the
 	virtual void pure_virtual_function() = 0; // pure virtual member function, makes the class abstract, cannot be instantiated
 	void const_function() const; // const member function, can be called on const objects and modify non-mutable members of the class
 	void volatile_function() volatile; // volatile member function, can be called on volatile objects
-
+	void const_volatile_function() const volatile; // const volatile member function, can be called on const volatile objects
+	void lvalue_ref_function() &; // lvalue reference member function, can be called on lvalue objects only
+	void rvalue_ref_function() &&; // rvalue reference member function, can be called on rvalue objects only
+	void const_lvalue_ref_function() const &; // const lvalue reference member function, can be called on const lvalue objects only
+	void const_rvalue_ref_function() const &&; // const rvalue reference member function, can be called on const rvalue objects only
 	// Special Member Functions
 	Base(); // default constructor declaration
 	Base(int a); // constructor declaration with parameter
@@ -343,7 +355,6 @@ protected: // protected access specifier, members are accessible from inside the
 	void operator->(); // pointer to member operator
 	static int operator()(int a); // static call operator
 	static int operator[](int index, int value); // static subscript operator
-
 	auto operator<=>(const Base& other) const = default; // if operator<=> is defaulted, or is defined and operator== is also defined the all comparison are automaticaly defined 
 	// if operator== is defined or defautled then operator!= is automatically defined
 
@@ -401,8 +412,8 @@ static union {
 // Enum
 enum Enum; // forward declaration of enumiration
 enum Enum { // enumeration definition, all values can be accessed from enclosing scope
-	Default, // default enumerator, has value of the previous enumerator + 1, or 0 if it's the first enumerator
 	One = 1, // enumerator with explicit value
+	Default, // default enumerator, has value of the previous enumerator + 1, or 0 if it's the first enumerator
 } enum_instance = One; // enum instance 
 Enum::One; One; // accessing enumerator either via scope resolution operator or directly
 int x = Default; // non class enumerators can be explicitly converted to their base type
@@ -527,7 +538,7 @@ auto lambda = [=]{}; // capture all variables in the enclosing scope by value
 auto lambda = [&]{}; // capture all variables in the enclosing scope by reference
 int var1, var2;
 auto lambda = [var1, &var2, var3=var2]{}; // capture var1 by value and var2 by reference, and create a new variable var3 using capture init
-auto lambda = [] static {}; // static lambda when there are no parameters
+auto lambda = [] static {}; // static lambda when there are no capture variables, allows compiler to optimize the call
 auto lambda = [=] mutable {}; // mutable capture, allows modification of the capture variables, by default ther are const
 auto lambda = [] noexcept {}; // noexcept lambda, will not throw an exception
 struct A {
@@ -625,7 +636,7 @@ template <char... chars> int operator""_char_count() { // user defined literal f
 [[maybe_unused]] int maybe_unused_var; // maybe_unused attribute, compiler will not warn if the variable is not used, usefull when compiling with flags that treat warnings as errors
 struct s {
 	[[no_unique_address]] int var1;
-	[[no_unique_address]] empty var2; // no_unique_address attribute, allows the compiler to optimize the memory layout of the class by using the same memory address for all empty members
+	[[no_unique_address]] empty var2; // no_unique_address attribute, allows the compiler to optimize the memory layout of the class by using the same memory address for all empty members, and using padding of some variables to store small members together
 };
 switch (int x) {
 	case 1: [[fallthrough]]; // fallthrough attribute, tells the compiler that it's intentional to fall through to the next case without a break statement, used when enabling compiler warnings for case statments without break
@@ -638,7 +649,7 @@ int function(int x) {
 	return x + 1; // the compiler may optimize the code and return 33
 }
 [[noreturn]] void noreturn_function(); // noreturn attribute, tells the compiler that the function will not return to it's caller
-
+[[noreturn, deprecated]] [[maybe_unused]] void deprecated_noreturn_function(); // multiple attributes can be applied to the same or different declaration
 
 
 // ==================================
@@ -738,7 +749,7 @@ template <typename T> requires std::same_as<T, int> and requires { T::method(); 
 
 static_assert(sizeof(int) == 4, "int must be 4 bytes"); // static assertion, will cause a compilation error if the constant expression convertible to bool is false, the second argument is the error message
 static_assert(AlwaysTrue<int>); // static assertion with no message
-static_assert(true, std::string("message: ") + "user generated error message"); // static assertion with user generated message, the message object must have a size() method returning a size_t and a data() method returning a const char* or char* pointer 
+static_assert(true, std::string("message: ") + "user generated error message"); // static assertion with user generated message, the message object must have a size() method returning a size_t and a data() method returning a const char* or char* pointer and must constexpr
 
 
 
@@ -841,7 +852,7 @@ void function(auto... pack) {
 #define STRINGIFY(x) #x // stringification operator, converts the argument to a string literal by adding double quotes around it
 #define CONCATENATE(x, y) x##y // token pasting operator, concatenates two tokens
 
-__LINE__, __FILE__, __DATE__, __TIME__, __func__, __cplusplus // predefined macros, will be replaced with the current line of code number, file name, date, time, function name and C++ standard version respectively
+__LINE__, __FILE__, __DATE__, __TIME__, __func__, __cplusplus // predefined macros, will be replaced with the current source code line number, file name, date, time, function name and C++ standard version respectively
 
 #undef DEBUG // undefine macro, will remove the definition of DEBUG
 
