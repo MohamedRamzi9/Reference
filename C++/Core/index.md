@@ -108,6 +108,8 @@
 		1. class declaration
 			1. alignas specifier
 			2. final specifier
+			3. replaceable_if_eligible specifier ❌❌❌
+			4. trivially_relocatable_if_eligible specifier ❌❌❌
 		2. class definition
 			1. access specifiers
 			2. member variables
@@ -170,6 +172,9 @@
 		3. enum class
 			1. using enum
 		4. enum base type
+    5. bit fields ❌❌❌
+        1. bit-field declaration
+		2. bit-field assignment 
 7. control statements
 	1. if else
 		1. if init statment
@@ -201,7 +206,8 @@
 	2. parameters
 		1. deducing this parameter
 	3. trailing return type
-	4. lambda calling 
+	4. constexpr and consteval lambdas
+	5. lambda calling 
 10. namespaces
 	1. namespace definition
 		1. nested namespace definition
@@ -309,7 +315,9 @@
 	9. #warning
 	10. #pragma
 		1. once
-25. modules 
+    11. _Pragma ❌❌❌
+25. alternative tokens ❌❌❌
+26. modules 
 	1. module declaration
 		1. module interface unit
 		2. module implementation unit
@@ -324,8 +332,8 @@
 		3. partition import declaration
 		4. partition export import declaration
 	4. private module fragment ❌❌❌
-26. asm declaration ❌❌❌
-27. contracts ❌❌❌
-28. expansion statements ❌❌❌
-29. reflection ❌❌❌
-30. 
+27. asm declaration ❌❌❌
+28. contracts ❌❌❌
+29. expansion statements ❌❌❌
+30. reflection ❌❌❌
+31. 

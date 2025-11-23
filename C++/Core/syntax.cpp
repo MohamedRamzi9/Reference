@@ -224,7 +224,7 @@ object_ptr->*ptr_to_member; // pointer to pointer member access operator
 *object_ptr; // dereference operator
 &object; // address-of operator
 object[5]; // subscript operator
-int ternary_result = 1 < 2 ? 3 : 4; // ternary operator
+int ternary_result = 1 < 2 ? 3 : 4; // ternary operator, must either return value in both cases or void in both cases or throw exception in either case
 int comma_result = 1, 3; // comma operator, was using it all along ;)
 int sizeof_result = sizeof(int); // sizeof operator, there is also sizeof... for parameter packs
 int alignof_result = alignof(int); // alignof operator, returns alignment of type
@@ -345,7 +345,7 @@ protected: // protected access specifier, members are accessible from inside the
 	~Base(); // destructor declaration
 
 	// Operators Overloading, all can be explicit 
-	int operator+(const Base& other); // overload the + operator, same for +=, -, -=, *, *=, /, /=, %, %=, &, &=, |, |=, ^, ^=, <<, <<=, >>, >>=, &&, ||, !, ==, !=, <, >, <=, >=, <=>
+	int operator+(const Base& other); // overload the + operator, same for +=, -, -=, *, *=, /, /=, %, %=, &, &=, |, |=, ^, ^=, <<, <<=, >>, >>=, &&, ||, !, ==, !=, <, >, <=, >=, <=>, ','
 	int operator-(); // overload the unary - operator, same for ~, prefix ++, prefix --, 
 	int operator++(int); // overload the postfix ++ operator, same for postfix -- 
 	operator int(); // conversion operator, works for any type, must return a value of the type being converted to
@@ -424,6 +424,14 @@ ClassEnum::one; // accessing class enum values
 using ClassEnum::two, ClassEnum::one; // using declaration, introduces one or more enumerators of the enum class into the enclosing scope
 using enum ClassEnum; // introduces all enumerators of an enum to the enclosing scope
 enum BaseTypeEnum : char {a, b}; // enum with base type, will use that type for the enumerators
+
+// Bit-field
+struct BitFieldStruct { 
+	char a : 3; // bit-field only uses 3 bits
+	char b : 5; // bit-field uses remaining bits of the previous member if any
+	unsigned int c : 10; // bit-field can span multiple bytes
+} bfs;
+bfs.a = 5; // assign value to bit-field like normal member, but value will be truncated to fit in the bit-field size if necessary
 
 
 
@@ -553,8 +561,10 @@ void function(auto... args) {
 }
 
 auto lambda = [](int a, int b) { return a + b; }; // lambda expression with parameters 
-auto lambda = [](this auto&& lambda, int x) { return x ? x == 1 : lambda(lambda, x - 1); }; // deducing this parameter, allows accessing the lambda itself for recursion 
+auto lambda = [](this auto&& lambda, int x) -> int { return x ? x == 1 : lambda(x - 1); }; // deducing this parameter, allows accessing the lambda itself for recursion, return type must be specified if returning a result
 auto lambda = [](auto a, auto b) -> int { return a + b; }; // lambda expression with trailing return type
+auto constexpr_lambda = []() constexpr { return 42; }; // constexpr lambda, may be evaluated at compile or runtime, depends on context
+auto consteval_lambda = []() consteval { return 42; }; // consteval lambda, must be evaluated at compile time
 lambda(1, 2); // calling the lambda 
 
 
