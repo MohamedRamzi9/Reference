@@ -1,3 +1,6 @@
+# 06-12-2025
+- added `streamlit.py` library to `Python/Libraries/3rd Party` 
+
 # 12-10-2025
 - added `Core` folder to `JavaScript` folder
 	- added `index.md` file
