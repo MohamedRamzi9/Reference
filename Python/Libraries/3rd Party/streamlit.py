@@ -1,16 +1,30 @@
+
+
+# CONTINUE FROM DATA TAB
+
+
+
+
+
+# import streamlit
 import streamlit as st
+
 import pandas as pd
 import numpy as np
 from datetime import datetime, date, time
 
+# set the page title and layout
 st.set_page_config(page_title="Streamlit Widget Demo", layout="wide")
 
+# app title
 st.title("🎛️ Streamlit Full Widget Demo App")
+# add text to the page using markdown 
 st.write("This app demonstrates every major Streamlit widget.")
 
 # ---------------------------
 #   LAYOUT
 # ---------------------------
+# create multiple tabs to organize the layout
 tab_inputs, tab_selectors, tab_buttons, tab_chat, tab_display, tab_data, tab_layout, tab_media = st.tabs([
     "Inputs", "Selectors", "Buttons", "Chat", "Display", "Data", "Layout", "Media"
 ])
@@ -18,19 +32,29 @@ tab_inputs, tab_selectors, tab_buttons, tab_chat, tab_display, tab_data, tab_lay
 # -----------------------------------------------------
 #   INPUTS TAB
 # -----------------------------------------------------
+# open a tab context to add widgets
 with tab_inputs:
+    # add a header to the page
     st.header("🟦 Input Widgets")
-
+    # add a text input widget
     text_val = st.text_input("Text Input:", "Hello")
+    # add a text area widget
     area_val = st.text_area("Text Area:", "Write something...")
+    # add a number input widget with a name, min, max, and default value
     num_val = st.number_input("Number Input:", 0, 100, 42)
+    # add a date input widget with a name and default value
     date_val = st.date_input("Date Input:", date.today())
+    # add a time input widget with a name and default value
     time_val = st.time_input("Time Input:", time(12, 0))
+    # add a file uploader widget with a name
     file_val = st.file_uploader("File Uploader:")
+    # add a color picker widget with a name and default value
     color_val = st.color_picker("Color Picker:", "#00ff00")
+    # add a camera input widget with a name
     img_val = st.camera_input("Camera Input (take a picture):")
 
     st.write("### Output:")
+    # display json to the page as formatted text
     st.write({
         "text": text_val,
         "textarea": area_val,
@@ -48,11 +72,17 @@ with tab_inputs:
 with tab_selectors:
     st.header("🟩 Selector Widgets")
 
+    # add a selectbox widget with a name and options
     select_val = st.selectbox("Selectbox:", ["A", "B", "C"])
+    # add a multiselect widget with a name and options
     multi_val = st.multiselect("Multiselect:", ["A", "B", "C", "D"])
+    # add a radio button widget with a name and options
     radio_val = st.radio("Radio:", ["Option 1", "Option 2", "Option 3"])
+    # add a checkbox widget with a name
     check_val = st.checkbox("Checkbox")
+    # add a slider widget with a name, min, max, and default value
     slider_val = st.slider("Slider:", 0, 100, 50)
+    # add a range slider widget with a name, min, max, and default range value
     range_val = st.slider("Range Slider:", 0, 100, (20, 80))
 
     st.write("### Output:")
@@ -71,17 +101,23 @@ with tab_selectors:
 with tab_buttons:
     st.header("🟨 Buttons & Forms")
 
+    # add a simple button widget, and also check if it was clicked
     if st.button("Simple Button"):
+        # show a success message
         st.success("Button clicked!")
 
+    # add a form with a text input and a submit button
     with st.form("my_form"):
         name = st.text_input("Name in Form:")
         submitted = st.form_submit_button("Submit Form")
 
     if submitted:
+        # show an info message
         st.info(f"Form submitted: {name}")
 
+    # add a download button
     st.download_button("Download file", "Hello world!", "hello.txt")
+
 
 # -----------------------------------------------------
 #   CHAT TAB
@@ -89,10 +125,13 @@ with tab_buttons:
 with tab_chat:
     st.header("💬 Chat Widgets")
 
+    # add a chat input widget and get the message when user sends it
     msg = st.chat_input("Say something:")
     if msg:
+        # write a message to the chat history
         st.chat_message("user").write(msg)
         st.chat_message("assistant").write(f"Echo: {msg}")
+
 
 # -----------------------------------------------------
 #   DISPLAY TAB
@@ -100,23 +139,32 @@ with tab_chat:
 with tab_display:
     st.header("📢 Display Elements")
 
+    # display a success message
     st.success("Success message!")
+    # display an error message
     st.error("Error message")
+    # display a warning message
     st.warning("Warning")
+    # display an info message
     st.info("Information message")
+    # display an exception message 
     st.exception(Exception("This is an exception"))
 
+    # display text using markdown
     st.markdown("### Markdown Example")
     st.markdown("**Bold**, *italic*, `code`")
-
     st.code("print('hello world')")
 
+    # add metric widgets
     st.metric("Temperature", "30°C", "+2°C")
 
+    # add a progress bar
     st.progress(40)
 
+    # add a spinner
     with st.spinner("Loading..."):
         pass
+
 
 # -----------------------------------------------------
 #   DATA TAB
