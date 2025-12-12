@@ -1,17 +1,9 @@
 
-
-# CONTINUE FROM DATA TAB
-
-
-
-
-
-# import streamlit
 import streamlit as st
 
 import pandas as pd
 import numpy as np
-from datetime import datetime, date, time
+from datetime import date, time
 
 # set the page title and layout
 st.set_page_config(page_title="Streamlit Widget Demo", layout="wide")
@@ -21,17 +13,12 @@ st.title("🎛️ Streamlit Full Widget Demo App")
 # add text to the page using markdown 
 st.write("This app demonstrates every major Streamlit widget.")
 
-# ---------------------------
-#   LAYOUT
-# ---------------------------
+
 # create multiple tabs to organize the layout
 tab_inputs, tab_selectors, tab_buttons, tab_chat, tab_display, tab_data, tab_layout, tab_media = st.tabs([
     "Inputs", "Selectors", "Buttons", "Chat", "Display", "Data", "Layout", "Media"
 ])
 
-# -----------------------------------------------------
-#   INPUTS TAB
-# -----------------------------------------------------
 # open a tab context to add widgets
 with tab_inputs:
     # add a header to the page
@@ -66,9 +53,7 @@ with tab_inputs:
         "image_taken": img_val is not None
     })
 
-# -----------------------------------------------------
-#   SELECTORS TAB
-# -----------------------------------------------------
+
 with tab_selectors:
     st.header("🟩 Selector Widgets")
 
@@ -95,9 +80,7 @@ with tab_selectors:
         "range_slider": range_val
     })
 
-# -----------------------------------------------------
-#   BUTTONS TAB
-# -----------------------------------------------------
+
 with tab_buttons:
     st.header("🟨 Buttons & Forms")
 
@@ -119,9 +102,7 @@ with tab_buttons:
     st.download_button("Download file", "Hello world!", "hello.txt")
 
 
-# -----------------------------------------------------
-#   CHAT TAB
-# -----------------------------------------------------
+
 with tab_chat:
     st.header("💬 Chat Widgets")
 
@@ -133,9 +114,7 @@ with tab_chat:
         st.chat_message("assistant").write(f"Echo: {msg}")
 
 
-# -----------------------------------------------------
-#   DISPLAY TAB
-# -----------------------------------------------------
+
 with tab_display:
     st.header("📢 Display Elements")
 
@@ -166,9 +145,7 @@ with tab_display:
         pass
 
 
-# -----------------------------------------------------
-#   DATA TAB
-# -----------------------------------------------------
+
 with tab_data:
     st.header("📊 Data Widgets")
 
@@ -179,55 +156,65 @@ with tab_data:
     })
 
     st.write("### DataFrame:")
+    # display a pandas dataframe
     st.dataframe(df)
 
     st.write("### Table:")
+    # display a static table
     st.table(df.head())
 
     st.write("### JSON:")
+    # display a JSON object
     st.json({"name": "Streamlit", "version": 1})
 
     st.write("### Charts:")
+    # display line chart of a dataframe
     st.line_chart(df)
+    # display area chart of a dataframe
     st.bar_chart(df)
 
-# -----------------------------------------------------
-#   LAYOUT TAB
-# -----------------------------------------------------
+
 with tab_layout:
     st.header("📐 Layout Widgets")
 
     st.subheader("Sidebar")
+    # create a sidebar to put widgets in
     st.sidebar.write("This is the sidebar!")
+    # add widgets to the sidebar
     st.sidebar.selectbox("Sidebar Selectbox", [1, 2, 3])
 
     st.subheader("Columns")
+    # create columns to arrange widgets side by side
     col1, col2 = st.columns(2)
+    # add content to each column
     col1.write("Left column")
     col2.write("Right column")
 
     st.subheader("Expander")
+    # create an expander that can hide content
     with st.expander("Open Me"):
         st.write("Hidden content")
 
     st.subheader("Container")
+    # create a container to group elements
     container = st.container()
+    # add content to the container
     container.write("Inside container")
 
     st.subheader("Placeholder")
+    # create a placeholder to update content later
     placeholder = st.empty()
+    # add content to the placeholder
     placeholder.write("This will update in 2 seconds...")
 
-    import time
     time.sleep(2)
     placeholder.write("Updated!")
 
-# -----------------------------------------------------
-#   MEDIA TAB
-# -----------------------------------------------------
+
 with tab_media:
     st.header("📷 Media Widgets")
 
+    # display image, video, and audio
     st.image("https://placekitten.com/300/200", caption="Random Cat")
     st.video("https://www.w3schools.com/html/mov_bbb.mp4")
     st.audio("https://www2.cs.uic.edu/~i101/SoundFiles/StarWars60.wav")

@@ -265,9 +265,9 @@ void function_declaration(); // declaration with no definition;
 auto auto_return_type() { return 1; }; // return type deduced from return statement
 auto trailing_return_type() -> int; // trailing return type
 void parameters(int a, auto x); // regular parameter and auto parameter
-void paramter_pack(auto... pack) { // paramter pack and pack indexing
-	auto first = pack...[0];
-	auto last = pack...[sizeof...(pack) - 1]; 
+void paramter_pack(auto... pack) { // paramter pack 
+	auto first = pack...[0]; // pack indexing
+	auto last = pack...[sizeof...(pack) - 1]; // pack indexing 
 }  
 void default_argument(int a = 10); // default argument, must be at the end of the parameter list
 void auto_concept_argument(always_true auto x); // auto argument with concept which must evaluate to true with the type of the argument
@@ -280,7 +280,7 @@ inline void inline_function(); // inline function, suggests to the compiler to i
 static void static_function(); // static function, has internal linkage
 extern void extern_function(); // extern function, defined in another translation unit
 extern "C" void c_linkage_function(int a); // extern function with C linkage for name mangling
-void overloaded_function(int a); int overloaded_function(double a); // overloaded function, same name but different parameters and return type
+void overloaded_function(int a); int overloaded_function(MyStruct a); // overloaded function, same name but different parameters and return type
 void deleted_function() = delete; // deleted function, this overload cannot be called
 void function_definition() { // the body of the function goes here inside the curly braces
 	// function body
@@ -292,7 +292,7 @@ void try_catch_function() try { // function with try-catch block
 	throw 1;
 } catch (int e) { }
 overloaded_function(10); // function call with int argument, chooses the correct overload
-
+overloaded_function({1, 2}); // function call with braced initializer list that matches MyStruct constructor
 
 
 // ===========================
@@ -379,7 +379,10 @@ class Derived1 : public Base { // public inheritance, attributes of Base are acc
 	}
 	void pure_virtual_function() override {} // override specifier, allows compiler to throw an error if the function is not overriding a base class function	
 } object;
+object.y = 5; // access derived class member
 object.Base::get_x(); // access Base class from object
+object.~Derived1(); // explicit destructor call
+using T=int; int a=8; a.~T(); // explicit destructor call using type alias for scalar types
 
 class A : virtual Base {}; class B : virtual Base {}; // virtual inheritance, to avoid having multiple base objects in diamond pattern
  
@@ -798,6 +801,7 @@ template <typename T, class U> class template_class { // template class, all the
 	template_class(T); 
 }; 
 template <> class template_class<int, char>; // template class specialization, allows creating specific definition of the class by specifying all template parameters
+template class template_class<void*, double>; // same as above, can remove redundent <> when no the template parameters list is empty
 template <typename T, class U> class template_class<T*, char>; // partial template specialization, allows creating specific definition of the class by specifying some template parameters 
 struct S { template <class> void template_member_function(); }; // template member function 
 

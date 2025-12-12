@@ -103,6 +103,7 @@
 		1. static variables
     1. function with try-catch block
 	2. function call
+      	1. braced initializer list as argument
 6. Types
 	1. class and struct
 		1. class declaration
@@ -161,6 +162,7 @@
 			11. friend functions
 			12. friend class 
 		3. static member access
+		4. accessing member variables and functions
 	2. anonymous class and struct 
 	3. union 		
 		1. anonymous union
