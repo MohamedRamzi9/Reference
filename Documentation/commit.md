@@ -13,7 +13,7 @@ Refactored:
 - <description of refactored features with file paths>
 
 ### Id
-- A unique identifier, can be sequential number or timestamp, to reference the commit in the changelog.
+- A unique identifier, can be sequential number or timestamp, to reference the commit in the changelog. In my case, I use `C` followed by a sequential number, e.g., `C1`, `C2`, etc.
 
 ### File paths
 - file paths should be relative to the project root for clarity.

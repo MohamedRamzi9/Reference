@@ -1,6 +1,11 @@
 
 # 13-12-2025
 - finieshed `syntax.lua` and `index.md` files in `Lua/Core` directory
+- added `Documentation` folder
+	- added `changelog.md` file
+		- added changelog format documentation
+	- added `commit.md` file
+		- added commit message format documentation
 
 # 12-12-2025
 - added `Lua` directory with `Core` subdirectory
