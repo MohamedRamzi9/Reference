@@ -104,13 +104,13 @@ value = list_var[1] -- returns the values for a given key in a table
 -- If-elseif-else
 if x > 5 then -- if statement with a condition
     x = x + 1 -- if block that executes if the condition is true
-elseif x < 5 then -- elseif statement with another condition
+elseif x < 5 then -- elseif statement with another condition, optional
     x = x - 1 -- elseif block that executes if the elseif condition is true and the previous conditions were false
-else -- else statement
+else -- else statement, optional
     x = 0 -- else block that executes if all previous conditions were false
 end -- end of if statement
 
-if x == 10 then x = 20 else x = 30 end 
+if x == 10 then x = 20 else x = 30 end -- single line if-else statement
 
 -- Goto statement
 goto label_name -- jumps to the specified label which can be defined before or after the goto statement
@@ -212,61 +212,31 @@ setmetatable(table_var, mt) -- assign the metatable to a table, which calls the 
 -- ========== MODULES ==========
 -- ============================
 
--- module.lua
-local M = {}
-
-function M.hello()
+local M = {} -- create a table to hold module functions and variables
+function M.hello() -- define a function in the module
     print("Hello from module")
 end
+return M -- return the module table from the file
 
-return M
+local m = require("module") -- load the module from another file
+m.hello() -- access the module functions and variables
 
--- usage:
--- local m = require("module")
--- m.hello()
 
 
 -- ============================
 -- ========== COROUTINES ==========
 -- ============================
 
-co = coroutine.create(function()
-    for i = 1, 3 do
-        coroutine.yield(i)
+co = coroutine.create(function(x) -- create a coroutine with a function, the arguments will have the values passed to the first call to coroutine.resume
+    local sum = 0
+    for i = x, x+3 do
+        sum = sum + coroutine.yield(i) -- yield returns the value passed to it to the caller of coroutine.resume, then the value passed to the next call of coroutine.resume is returned from coroutine.yield 
     end
 end)
 
-status, val = coroutine.resume(co)
+status, val = coroutine.resume(co, 1) -- calling the coroutine returns status (true if no error) and the yielded value returned from coroutine.yield or return statement, and passes 1 as the argument to the coroutine function
+status, val = coroutine.resume(co, 10) -- resumes the coroutine, which continues execution from the last yield point which will receive 10 as the return value of coroutine.yield
 
-
--- ============================
--- ========== OOP PATTERN (NO BUILT-IN) ==========
--- ============================
-
-Base = {}
-Base.__index = Base
-
-function Base:new(value)
-    return setmetatable({ value = value }, self)
-end
-
-function Base:method()
-    return self.value
-end
-
--- Inheritance
-Derived = setmetatable({}, { __index = Base })
-Derived.__index = Derived
-
-function Derived:new(value, extra)
-    local obj = Base.new(self, value)
-    obj.extra = extra
-    return obj
-end
-
-function Derived:method()
-    return self.value + self.extra
-end
 
 
 -- ====================================
@@ -274,9 +244,9 @@ end
 -- ====================================
 
 function risky()
-    error("Something went wrong")
+    error("Something went wrong") -- raises an error with the given value and stops execution and unwinds the stack
 end
 
-status, msg = pcall(risky)
+status, msg = pcall(risky) -- protected call to a function, catches any errors raised and returns status (true if no error) and the error value if any or return value of the function if no error
 
 

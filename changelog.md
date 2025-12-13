@@ -1,4 +1,7 @@
 
+# 13-12-2025
+- finieshed `syntax.lua` and `index.md` files in `Lua/Core` directory
+
 # 12-12-2025
 - added `Lua` directory with `Core` subdirectory
 	- added `syntax.lua`
