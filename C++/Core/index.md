@@ -149,7 +149,8 @@
 				10. static subscript operator
 				11. comma operator ❌❌❌
 				12. new, new[], delete, delete[] operators ❌❌❌
-				13. co_await operator ❌❌❌                
+				13. co_await operator ❌❌❌
+				14. operator auto() ❌❌❌                
 			8. default special functions
 			9. nested class 
 			10. inheritance

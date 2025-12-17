@@ -93,6 +93,7 @@ decltype(auto_var) decltype_var = const_var; // type deduced from initializer wi
 auto [x, y] = my_struct_var; // structured binding to a copy of my_struct_var, x and y are references to members of the copy
 auto& [x, y] = my_struct_var; // structured binding that references my_struct_var, x and y are references to members of my_struct_var
 auto&& [x, y] = my_struct_var; // structured binding to an rvalue of my_struct_var, x and y are references to members of the rvalue
+auto [...pack] = my_struct_var; // pack introduction from structured binding mtaches the rest of non-bound members into a parameter pack
 int MyStruct::* ptr_to_member = &MyStruct::x; // pointer to member x of MyStruct
 void (MyStruct::* ptr_to_member_function)() = &MyStruct::method; // pointer to member function method of MyStruct
 int _ = 4; char _ = 'a'; // placeholder variable with no name, can be redeclared as many times with any type, can't be accessed
@@ -523,7 +524,7 @@ for (auto& element : array) { // range for loop, iterates over the elements retu
 for (char array[5] = {1}; int& i : array); // range for loop with initializer
 
 // While Loop
-while (true) { // while loop, braces are optional if the body has only one statement
+while (true) { // while loop, braces are optional if the body has only one statement, will continue executing as long as the condition is true
 	// code will be executed as long as the condition is true
 	if (false)
 		break; // break statement, exits the loop

@@ -1,8 +1,20 @@
 #include "rmz_print.hpp"
 
+struct S {
+	int a;
+	float b;
+	operator auto() const {
+		return false;
+	}
+};
+
 int main() {
 
-	using T=int; int a=8; a.~T();
-	rmz::print("Hello, World!\n");
-	return 0;
+	S s{42, 3.14f};
+	if (auto [a, b] = s) {
+		rmz::println("a: {}, b: {}", a, b);
+	} else {
+		rmz::println("Conversion to bool failed");
+	}
+	
 }
