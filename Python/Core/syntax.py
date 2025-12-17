@@ -117,6 +117,11 @@ bit_not_result = ~5 # bitwise Complement
 bit_left_shift_result = 5 << 1 # bitwise left shift
 bit_right_shift_result = 5 >> 1 # bitwise right shift
 
+# Compound assignment operators
+var = 5
+var += 3  # equivalent to var = var + 3
+# other compound assignment operators: -=, *=, /=, //=, **=, %=, &=, |=, ^=, <<=, >>=
+
 # Membership access operator
 obj_var1.var = 10
 obj_var1.method()

@@ -33,8 +33,8 @@ with tab_inputs:
     date_val = st.date_input("Date Input:", date.today())
     # add a time input widget with a name and default value
     time_val = st.time_input("Time Input:", time(12, 0))
-    # add a file uploader widget with a name
-    file_val = st.file_uploader("File Uploader:")
+    # add a file uploader widget with a name, optinally restrict file types and allow multiple files 
+    file_val = st.file_uploader("File Uploader:", type=["txt", "csv"], accept_multiple_files=True)
     # add a color picker widget with a name and default value
     color_val = st.color_picker("Color Picker:", "#00ff00")
     # add a camera input widget with a name
