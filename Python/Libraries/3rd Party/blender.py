@@ -1,6 +1,16 @@
 import bpy # import Blender Python API
 
-
+bl_info = { # metadata about the Blender add-on
+    "name": "My Blender Add-on", # name of the add-on
+    "author": "Your Name", # author of the add-on
+    "Category": "Object", # category under which the add-on will be listed (IMPORTANT otherwise it won't show up)
+    "version": (1, 0), # version of the add-on as a tuple
+    "blender": (2, 80, 0), # minimum Blender version required for the add-on
+    "location": "View3D > UI > Item Tab", # location in the Blender UI where the add-on can be found
+    "description": "An example Blender add-on", # brief description of the add-on
+    "warning": "", # any warnings about the add-on (e.g. deprecated features)
+    "wiki_url": "", # URL to the add-on documentation
+}
 
 # Accessing data in Blender
 
@@ -86,10 +96,15 @@ class MyPanel(bpy.types.Panel): # define a new panel to be added to the UI
     def draw(self, context): # method to called to define the layout of the panel
         object = context.object # get the active object, same as context.active_object
         layout = self.layout # get the layout object for the panel
-        row = layout.row() # create a new row in the layout
-        col = layout.column() # create a new column in the layout
-        row.label(text="this is a panel") # add a label to the row
-        row.prop(object.properties, "open") # diplays the specific property by attribute name from the property group, the UI will match the property attributes used in its definition 
+        row = layout.row() # create a new row in the layout, which can hold multiple UI elements horizontally
+        col = layout.column() # create a new column in the layout, which can hold multiple UI elements vertically
+        layout.label(text="this is a panel") # add a label to the panel 
+        row.prop(object.properties, "open", # diplays the specific property by attribute name from the property group, the UI will match the property attributes used in its definition 
+            text="Float Property", # custom label for the property in the UI instead of the property name
+            slider=True # display the property as a slider for float and int properties
+            toggle=True # display the property as a toggle button for boolean properties
+            expand=True # display all enum items expanded instead of a dropdown menu for enum properties
+        ) 
         row.operator("wm.save_mainfile") # add a button with a predefined operator in Blender
         
 
