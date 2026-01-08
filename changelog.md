@@ -1,4 +1,7 @@
 
+# 08-01-2026
+- added `blender.py` file to `Python/Libraries/3rd Party` directory with some Blender API documentation
+	
 # 13-12-2025
 - finieshed `syntax.lua` and `index.md` files in `Lua/Core` directory
 - added `Documentation` folder
