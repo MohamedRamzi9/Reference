@@ -1,12 +1,13 @@
+
 import bpy # import Blender Python API
 
 bl_info = { # metadata about the Blender add-on
-    "name": "My Blender Add-on", # name of the add-on
+    "name": "My Blender Add-on", # name of the add-on (mandatory)
     "author": "Your Name", # author of the add-on
-    "Category": "Object", # category under which the add-on will be listed (IMPORTANT otherwise it won't show up)
+    "category": "Object", # category under which the add-on will be listed (mandatory)
     "version": (1, 0), # version of the add-on as a tuple
-    "blender": (2, 80, 0), # minimum Blender version required for the add-on
-    "location": "View3D > UI > Item Tab", # location in the Blender UI where the add-on can be found
+    "blender": (2, 80, 0), # minimum Blender version required for the add-on (major, minor, patch) (mandatory)
+    "location": "View3D > UI > Item Tab", # location in the Blender UI where the add-on can be found 
     "description": "An example Blender add-on", # brief description of the add-on
     "warning": "", # any warnings about the add-on (e.g. deprecated features)
     "wiki_url": "", # URL to the add-on documentation
@@ -30,6 +31,8 @@ scale = matrix_world.to_scale() # get the scale component of the matrix as a Vec
 rotation_scale_matrix = object.matrix_world.to_3x3() # convert the 4x4 matrix to a 3x3 matrix containing only rotation and scale
 rotation = rotation_scale_matrix.normalized() # normalize the 3x3 matrix to remove scale, leaving only rotation
 dimensions = object.dimensions # get the dimensions of the object as a Vector class representing width, height and depth
+
+translation, rotation, scale = matrix_world.decompose() # decompose the 4x4 matrix into its translation (Vector), rotation (Quaternion) and scale (Vector) components
 
 # Accessing object modifiers
 modifiers = object.modifiers # get a collection of all modifiers applied to the object
