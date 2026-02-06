@@ -1,0 +1,28 @@
+\usepackage{tabularx}
+
+% Table
+\begin{table}[h] % start of table environment, with placement option 'here', can also be t (top), b (bottom), p (page of floats), ! (override), H (exactly here, requires float package)
+    
+    \begin{tabular}{| % begin of tabular environment with various column types, | for vertical lines between columns and around the table, optional
+            p{3cm}| % fixed width column, top aligned, justified text
+            m{3cm}| % fixed width column, middle aligned, justified text
+            b{3cm}| % fixed width column, bottom aligned, justified text
+            >{\centering\arraybackslash}p{3cm}| % fixed width column, centered text, not justified
+            >{\raggedright\arraybackslash}p{3cm}| % fixed width column, left aligned text, not justified
+            >{\raggedleft\arraybackslash}p{3cm}| % fixed width column, right aligned text, not justified
+        }
+        \centering % center align the table, \raggedright for right, or \raggedleft for left
+        \hline % horizontal line on top
+        Header 1 & Header 2 & Header 3 \\ % table headers, & separates columns, \\ ends the row
+        \hline % horizontal line
+        Row 1 Col 1 & Row 1 Col 2 & Row 1 Col 3 \\ % first row
+        Row 2 Col 1 & Row 2 Col 2 & Row 2 Col 3 \\ % second row
+        \hline % horizontal line at the bottom
+    \end{tabular}
+    
+    \begin{tabularx}{\textwidth}{|X|X|X|} % start of tabularx environment with specified width (here \textwidth), X columns auto-adjust width
+    \end{tabularx} % end of tabularx environment
+
+    \caption{Basic Table} % caption for the table
+    \label{tab:basic_table} % label for referencing the table
+\end{table} % end of table environment

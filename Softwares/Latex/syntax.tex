@@ -1,0 +1,195 @@
+% ==============================
+% ========== COMMENTS ==========
+% ==============================
+
+% this is a single line comment
+
+
+
+% ==============================
+% ========== PACKAGES ==========
+% ==============================
+
+% Load packages
+\usepackage{geometry} % page margins and layout
+\usepackage{setspace} % line spacing
+\usepackage{titlesec} % section formatting
+\usepackage{tocloft} % table of contents customization
+\usepackage{fancyhdr} % headers and footers
+\usepackage{amsmath} % advanced math typesetting
+\usepackage{amsfonts} % additional math fonts
+\usepackage{amssymb} % additional math symbols
+\usepackage{amsfonts} % math fonts
+\usepackage{mathtools} % extension of amsmath
+\usepackage{bm} % bold math symbols
+\usepackage{graphicx} % including graphics
+\usepackage{caption} % customizing captions
+\usepackage{subcaption} % sub-captions for figures and tables
+\usepackage{float} % improved float handling for figures and tables
+\usepackage{array} % advanced array and tabular environments
+\usepackage{booktabs} % enhanced table formatting
+\usepackage{multirow} % multi-row cells in tables
+\usepackage{hyperref} % hyperlinks
+\usepackage{cleveref} % enhanced cross-referencing
+\usepackage{listings} % code listings
+\usepackage{xcolor} % color definitions
+\usepackage{enumitem} % customized lists
+
+
+
+% ===============================
+% ======== DOCUMENT SETUP =======
+% ===============================
+
+\documentclass{article} % set the document class 
+\begin{document} % added at the beginning of the document
+
+% \end{document} % added at the end of the document
+
+
+
+% =====================================
+% ========== TEXT FORMATTING ==========
+% =====================================
+
+% Text Shapes
+\textbf{Bold Text} % bold text
+\textit{Italic Text} % italic text
+\underline{Underlined Text} % underlined text
+\emph{Emphasized Text} % emphasized text
+\texttt{Monospaced Text} % monospaced text
+\textsl{Slanted Text} % slanted text
+\textrm{Roman Text} % roman text
+\textsf{Sans Serif Text} % sans serif text
+\textsc{Small Caps Text} % small caps text
+\uppercase{Uppercase Text} % uppercase text
+\lowercase{Lowercase Text} % lowercase text
+
+% Text Sizes
+\tiny{Tiny Text} % tiny text
+\scriptsize{Scriptsize Text} % scriptsize text
+\footnotesize{Footnotesize Text} % footnotesize text
+\small{Small Text} % small text
+\normalsize{Normal Size Text} % normal size text
+\large{Large Text} % large text
+\Large{Larger Text} % larger text
+\LARGE{LARGER Text} % LARGER text
+\huge{Huge Text} % huge text
+\Huge{HUGE Text} % HUGE text
+
+% Special Characters Escape
+\# % hash symbol
+\$ % dollar sign
+\% % percent sign
+\& % ampersand
+\_ % underscore
+\{ % left curly brace
+\} % right curly brace
+\textbackslash % backslash
+\textbar % vertical bar
+\textless % less than symbol
+\textgreater % greater than symbol
+
+% Text Alignments
+\begin{center}Centered Text\end{center} % centered text
+\centering % center alignment for following text
+\begin{flushleft}Left Aligned Text\end{flushleft} % left aligned text
+\raggedleft % right alignment for following text
+\begin{flushright}Right Aligned Text\end{flushright} % right aligned text
+\raggedright % right alignment for following text
+
+% Text Colors
+\textcolor{red}{Colored Text} % colored text
+\color{blue} % change color for following text
+% list of colors: red, green, blue, cyan, magenta, yellow, black, white, gray, brown, orange, purple, pink
+
+% Unformatted Text
+\verb|Unformatted Text| % inline unformatted text, does not interpret special characters
+\begin{verbatim} % unformatted text block begin
+    This is an unformatted text block.
+    Special characters like # $ % & _ { } \ will not be interpreted.
+\end{verbatim} % unformatted text block end
+
+
+% =======================================
+% =========== TEST CONTAINERS ===========
+% =======================================
+
+\mbox{unbreakable text} % unbreakable text box
+\fbox{framed text} % framed text box
+
+
+% =================================
+% ========== LINE BREAKS ==========
+% =================================
+
+\newline % new line
+\\ % new line
+\\* % new line without page break
+\noindent % no indentation
+\indent % indentation
+\vspace{1cm} % vertical space of some length
+\vspace*{1cm} % vertical space of some length without page break
+\hspace{1cm} % horizontal space of some length
+\hspace*{1cm} % horizontal space of some length without page break
+\newpage % new page
+\pagebreak % page break
+\nopagebreak % no page break
+\linebreak % line break
+\clearpage % clear page and floats
+\nolinebreak % no line break
+
+
+% ============================
+% ========== LISTS ===========
+% ============================ 
+
+\begin{itemize} % unordered list begin
+    \item item A % list item 1 (unumbered)
+    \item item B % list item 2 (unumbered)
+\end{itemize} % unordered list end
+
+\begin{enumerate} % ordered list begin
+    \item item 1 % list item 1 (numbered)
+    \item item 2 % list item 2 (numbered)
+\end{enumerate} % ordered list end
+
+\begin{description} % description list begin
+    \item[Term 1] Definition of term 1 % description item 1
+    \item[Term 2] Definition of term 2 % description item 2
+    \item[] Definition without term % description item without term
+\end{description} % description list end
+
+% List Nesting
+\begin{itemize} % outer unordered list begin
+    \item Outer Item 1 % outer list item 1
+    \begin{enumerate} % inner ordered list begin
+        \item Inner Item 1 % inner list item 1
+        \item Inner Item 2 % inner list item 2
+    \end{enumerate} % inner ordered list end
+    \item Outer Item 2 % outer list item 2
+\end{itemize} % outer unordered list end
+
+
+
+% ==============================
+% ========== SECTIONS ==========
+% ==============================
+
+\chapter{Chapter Title} % numbered chapter (only in report/book class)
+\section{Section Title} % numbered section
+\subsection{Subsection Title} % numbered subsection
+\subsubsection{Subsubsection Title} % numbered subsubsection
+\paragraph{Paragraph Title} % numbered paragraph
+\subparagraph{Subparagraph Title} % numbered subparagraph
+
+\chapter*{Unnumbered Chapter Title} % unnumbered chapter (only in report/book class)
+\section*{Unnumbered Section Title} % unnumbered section
+\subsection*{Unnumbered Subsection Title} % unnumbered subsection
+\subsubsection*{Unnumbered Subsubsection Title} % unnumbered subsubsection
+\paragraph*{Unnumbered Paragraph Title} % unnumbered paragraph
+\subparagraph*{Unnumbered Subparagraph Title} % unnumbered subparagraph
+
+
+
+\end{document} % added at the end of the document

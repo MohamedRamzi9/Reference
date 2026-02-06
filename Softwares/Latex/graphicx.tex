@@ -1,0 +1,31 @@
+\usepackage{graphicx} % for including graphics
+\usepackage{subcaption} % for sub-figures 
+
+% Single Image
+\begin{figure} % start of figure environment
+    \centering % for center alignement, \raggedright for right, or \raggedleft for left
+    \includegraphics[width=0.5\textwidth]{path/to/image.png} % include the image with specified width which can be in any width unit in LaTeX
+    \caption{Caption} % caption for the figure, optional
+    \label{fig:label} % label for referencing the figure, optional
+\end{figure} % end of figure environment
+
+% Multiple Sub-Images
+\begin{figure}[h] % placement options: h (here), t (top), b (bottom), p (page of floats), ! (override), H (exactly here, requires float package)
+    
+    \begin{subfigure}{0.45\textwidth} % start of subfigure environment with specified width
+        \includegraphics{graphicx.png}
+        \caption{First Subfigure} % caption for the subfigure
+    \end{subfigure} % end of first subfigure
+    
+    \hfill % horizontal space between subfigures, to go to next line use \newline
+    
+    \begin{subfigure}[t]{0.45\textwidth} % subfigure with top alignment, can also use [b] for bottom or [c] for center
+        \includegraphics{graphicx.png}
+        \caption{Second Subfigure} % caption for the subfigure
+    \end{subfigure} % end of second subfigure
+    \caption{Main Figure Caption} % caption for the main figure
+    
+    \label{fig:main_label} % label for referencing the main figure
+\end{figure} % end of figure environment
+    
+    
