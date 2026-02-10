@@ -126,7 +126,7 @@ git remote prune <remote>    // removes all stale remote tracking branches of th
 
 ### Cloning
 ```git
-git clone <remote> <directory>    // clones the remote repository into the given local directory, if no directory is specified, it uses the repository name as the new directory name
+git clone <remote> <directory>    // clones the remote repository into the given local directory, if no directory is specified, it uses the repository name as the new directory name in the current directory
 ```
 
 ### Fetching

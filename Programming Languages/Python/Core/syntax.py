@@ -200,8 +200,8 @@ else: # else block, executed if loop completes without break
 # ========== EXCEPTION ==========
 # ===============================
 
-try: # try block, contains code that may raise an exception
-	int_var = 10 / 0
+try: # try block, contains code that may raise an exception, only one catch block will be executed for the first exception that occurs in the try block
+	raise ValueError("This is a value error") # raise statement, raises an exception of the specified type
 except ZeroDivisionError as e: # catch block, catches the exception raised in the try block, will get the exception object as e of the specified type or its derived types
 	int_var = 0
 except Exception as e: # catch any exception, cause all exceptions inherit from Exception
@@ -210,8 +210,6 @@ else: # else block, executed if no exception occurs in the try block
 	int_var = 50
 finally: # finally block, always executed regardless of whether an exception occurs or not
 	int_var = 100
-
-raise ValueError("This is a value error") # raise statement, raises an exception of the specified type
 
 
 
@@ -438,3 +436,18 @@ for value in gen:  # Iterate through the remaining values
 	pass
 for value in generator_function(3):  # Iterate through the generator directly
 	pass
+
+
+
+# =============================
+# ========== IMPORTS ==========
+# =============================
+import math # import statement, adds the module to the current namespace, relative to the parent directory where the main script is run
+import .syntax # relative import, . refers to the current package, instead of starting from the root directory, every additional . will go one level up in the directory structure up to maximum of the root directory
+from math import sqrt, pi as circle_pi # from import statement, imports specific names from the module into the current namespace separated by commas, which can optionally be renamed using as keyword
+from math import ( # use parentheses for multiline import statements, useful for readability 
+	sqrt,
+	pi,
+)
+from math import * # from import statement with *, imports all names from the module into the current namespace
+import math.pi, math.sqrt as sqrt # accessing a specific name from the module using dot notation, can be nested to access submodules or attributes of the module, unless renamed using as keyword, it must be accessed later using the full imported name

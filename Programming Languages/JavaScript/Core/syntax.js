@@ -137,10 +137,15 @@ switch (var2) { // switch statement, evaluates expression and executes correspon
 
 
 // Try-Catch-Finally Statement
+try { // try block, contains code that may throw an exception
+    throw new Error('Something went wrong'); // throw statement, throws an exception with an error object
+} catch (error) { // catch block, handles exceptions thrown in try block
+    console.log(error.message); // error object contains information about the exception
+} finally { // finally block, executes regardless of whether try block or catch block executed, optional
+    console.log('This will always execute');
+}
 
-// Throw Statement
-
-
+ 
 
 // ===========================
 // ========== LOOPS ==========
@@ -257,5 +262,16 @@ class DerivedClass extends BaseClass { // class declaration with inheritance usi
 // =============================
 
 // Exporting
+export const exported_variable = 42; // variable export, can be accessed in other modules
+export function exported_function() {} // function export, can be accessed in other modules
+export class ExportedClass {} // class export, can be accessed in other modules
+export { var1, function_declaration }; // named exports, exports entities not declared with export keyword, can be accessed in other modules 
+export default function default_export() {} // default export, will be the default entity imported when importing the module without specifying named imports, can only have one default export per module
 
 // Importing
+import './module.js'; // import module for side effects only, by executing the module code
+import { exported_variable, exported_function as method} from './module.js'; // named import, imports specific entities from a module separated by commas, which can be optionally renamed using as keyword
+import defalt_function from './module.js'; // default import, imports the default export from a module, which doesn't have to be same name as the default export in the module
+import defalt_function, { exported_variable } from './module.js'; // default import can be combined with named imports in a single statement 
+import * as Module from './module.js'; // namespace import, imports all exports from a module as properties of an object, which can be accessed using dot notation, default export is available as Module.default
+const module = import('./module.js'); // dynamic import, returns a promise that resolves to the module object when the module is loaded, non blocking
