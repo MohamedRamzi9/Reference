@@ -43,10 +43,6 @@ int main(int argc, char* argv[]) {} // With arguments version
 // ========== VARIABLES ==========
 // ===============================
 
-// Decalaration
-int a; // single decaration
-int b, c; // multiple declaration of same type
-
 // Primitive Types
 char char_var; // 8bit equivalent to signed char
 unsigned char unsigned_char_var; // 8bit equivalent to unsigned char
@@ -71,6 +67,9 @@ char& lvalue_ref_var = char_var; // lvalue reference, must be initialized
 char&& rvalue_ref_var = 'a'; // rvalue reference, must be initialized
 MyStruct my_struct_var; // user-defined type
 
+// Decalaration
+int a; // single decaration
+int b, c; // multiple declaration of same type
 const int const_var = 10; // must be initialized at declaration
 volatile int volatile_var;  // tells compiler can't optimize this variable
 extern int extern_var; // defined in another file
@@ -84,7 +83,11 @@ thread_local int thread_local_var; // unique to each thread
 constinit int constinit_var = 20; // must be initialized at declaration, can be changed later
 constexpr int constexpr_var = 30; // must be initialized at declaration, will be replaced at compile time
 inline int inline_var = 40; // allows same definition in different translation units
-alignas(16) int aligned_var; // variable with alignment requirement, can be any power of 2
+alignas(32) short aligned_by_value_var; // variable with alignment requirement, can be any power of 2 up tp alignof(std::max_align_t)
+alignas(int) char[4] aligned_by_type_var; // same as above but uses the alignment of the specified type
+alignas(8) alignas(32) char[2] aligned_array_var; // multiple alignment specifiers, uses the strictest one
+int aligned_var alignas(16); // same as above but with the alignment specifier after the variable name, this is the only way to specify alignment for variables with incomplete type
+template <class ...T> alignas(T...) char aligned_by_pack_var; // variable with alignment requirement specified by a parameter pack, can be used in a template, uses the strictest alignment among the types in the pack
 int (*function_ptr)(int) = function; // function pointer
 int (*function_ptr)(int) = &function; // can also use address-of operator
 int (&function_ref)(int) = function; // function reference
@@ -664,7 +667,7 @@ int function(int x) {
 }
 [[noreturn]] void noreturn_function(); // noreturn attribute, tells the compiler that the function will not return to it's caller
 [[noreturn, deprecated]] [[maybe_unused]] void deprecated_noreturn_function(); // multiple attributes can be applied to the same or different declaration
-
+int x [[indeterminate]]; // indeterminate attribute, uses of this variable before initialization will not be diagnosed as undefined instead of erroneous behavior
 
 // ==================================
 // ========== TYPE CASTING ==========
