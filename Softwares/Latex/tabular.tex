@@ -4,6 +4,9 @@
 \begin{table}[h] % start of table environment, with placement option 'here', can also be t (top), b (bottom), p (page of floats), ! (override), H (exactly here, requires float package)
     
     \begin{tabular}{| % begin of tabular environment with various column types, | for vertical lines between columns and around the table, optional
+            c| % centered column, vertically aligned in the top
+            l| % left aligned column, vertically aligned in the top
+            r| % right aligned column, vertically aligned in the top 
             p{3cm}| % fixed width column, top aligned, justified text
             m{3cm}| % fixed width column, middle aligned, justified text
             b{3cm}| % fixed width column, bottom aligned, justified text
@@ -20,7 +23,7 @@
         \hline % horizontal line at the bottom
     \end{tabular}
     
-    \begin{tabularx}{\textwidth}{|X|X|X|} % start of tabularx environment with specified width (here \textwidth), X columns auto-adjust width
+    \begin{tabularx}{\textwidth}{|X|X|X|} % start of tabularx environment with specified width (here \textwidth), X columns auto-adjust width to fit their content
     \end{tabularx} % end of tabularx environment
 
     \caption{Basic Table} % caption for the table

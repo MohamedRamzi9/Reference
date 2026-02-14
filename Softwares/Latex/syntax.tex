@@ -52,30 +52,40 @@
 % ========== TEXT FORMATTING ==========
 % =====================================
 
+% Grouping and Scoping
+{This \bfseries is \tiny a \ttfamily group} % text inside the group is affected by formatting declarations which do not affect text outside the group
+
 % Text Shapes
-\textbf{Bold Text} % bold text
-\textit{Italic Text} % italic text
+\textbf{Bold Text} % bold text command with local scope
+\bfseries Bold Text % bold text declaration with global scope until the next font change
+\textit{Italic Text} % italic text command with local scope
+\itshape Italic Text % italic text declaration with global scope until the next font change
 \underline{Underlined Text} % underlined text
-\emph{Emphasized Text} % emphasized text
-\texttt{Monospaced Text} % monospaced text
-\textsl{Slanted Text} % slanted text
+\emph{Emphasized Text} % emphasized text command with local scope, typically italicized, nested emphasis toggles back to normal 
+\texttt{Monospaced Text} % monospaced text command with local scope
+\ttfamily Monospaced Text % monospaced text declaration with global scope until the next font change
+\textsl{Slanted Text} % slanted text command with local scope
+\slshape Slanted Text % slanted text declaration with global scope until the next font change
 \textrm{Roman Text} % roman text
+\rmfamily Roman Text % roman text declaration with global scope until the next font change
 \textsf{Sans Serif Text} % sans serif text
+\sffamily Sans Serif Text % sans serif text declaration with global scope until the next font change
 \textsc{Small Caps Text} % small caps text
+\scshape Small Caps Text % small caps text declaration with global scope until the next font change
 \uppercase{Uppercase Text} % uppercase text
 \lowercase{Lowercase Text} % lowercase text
 
 % Text Sizes
-\tiny{Tiny Text} % tiny text
-\scriptsize{Scriptsize Text} % scriptsize text
-\footnotesize{Footnotesize Text} % footnotesize text
-\small{Small Text} % small text
-\normalsize{Normal Size Text} % normal size text
-\large{Large Text} % large text
-\Large{Larger Text} % larger text
-\LARGE{LARGER Text} % LARGER text
-\huge{Huge Text} % huge text
-\Huge{HUGE Text} % HUGE text
+\tiny{Tiny Text} % tiny text command with local scope, remove {} to use it as declaraion 
+\scriptsize{Scriptsize Text} % scriptsize text command with local scope, remove {} to use it as declaraion
+\footnotesize{Footnotesize Text} % footnotesize text command with local scope, remove {} to use it as declaraion
+\small{Small Text} % small text command with local scope, remove {} to use it as declaraion
+\normalsize{Normal Size Text} % normal size text command with local scope, remove {} to use it as declaraion
+\large{Large Text} % large text command with local scope, remove {} to use it as declaraion
+\Large{Larger Text} % larger text command with local scope, remove {} to use it as declaraion
+\LARGE{LARGER Text} % LARGER text command with local scope, remove {} to use it as declaraion
+\huge{Huge Text} % huge text command with local scope, remove {} to use it as declaraion
+\Huge{HUGE Text} % HUGE text command with local scope, remove {} to use it as declaraion
 
 % Special Characters Escape
 \# % hash symbol
@@ -91,24 +101,25 @@
 \textgreater % greater than symbol
 
 % Text Alignments
-\begin{center}Centered Text\end{center} % centered text
-\centering % center alignment for following text
-\begin{flushleft}Left Aligned Text\end{flushleft} % left aligned text
-\raggedleft % right alignment for following text
-\begin{flushright}Right Aligned Text\end{flushright} % right aligned text
-\raggedright % right alignment for following text
+\begin{center}Centered Text\end{center} % center alignement in environment
+\centering % center alignment declaration with global scope until the next alignment change
+\begin{flushleft}Left Aligned Text\end{flushleft} % left alignement in environment
+\raggedleft % right alignment declaration with global scope until the next alignment change
+\begin{flushright}Right Aligned Text\end{flushright} % right alignement in environment
+\raggedright % left alignment declaration with global scope until the next alignment change
 
 % Text Colors
-\textcolor{red}{Colored Text} % colored text
-\color{blue} % change color for following text
+\textcolor{red}{Colored Text} % colored text command with local scope
+\color{blue} % change color declaration with global scope until the next color change
 % list of colors: red, green, blue, cyan, magenta, yellow, black, white, gray, brown, orange, purple, pink
 
 % Unformatted Text
 \verb|Unformatted Text| % inline unformatted text, does not interpret special characters
-\begin{verbatim} % unformatted text block begin
+\begin{verbatim} % unformatted text environement begin
     This is an unformatted text block.
     Special characters like # $ % & _ { } \ will not be interpreted.
-\end{verbatim} % unformatted text block end
+\end{verbatim} % unformatted text environement end
+
 
 
 % =======================================
@@ -116,7 +127,15 @@
 % =======================================
 
 \mbox{unbreakable text} % unbreakable text box
+
 \fbox{framed text} % framed text box
+
+\begin{minipage} % minipage environment begin, used for creating a box of specified width that can contain multiple lines of text and other elements
+    \textbf{Minipage Content} % content inside the minipage 
+    \\ % new line within minipage
+    Other text in minipage  
+\end{minipage} % minipage environment end
+
 
 
 % =================================
@@ -138,6 +157,7 @@
 \linebreak % line break
 \clearpage % clear page and floats
 \nolinebreak % no line break
+
 
 
 % ============================
