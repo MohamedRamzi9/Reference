@@ -1,0 +1,1 @@
+- when building the extension it must be built as a shared library (DLL on Windows, .so on Linux) and linked against the Python library, the resulting file must be named "module.pyd" on Windows or "module.so" on Linux to be importable in Python as "import module"
