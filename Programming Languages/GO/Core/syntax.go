@@ -113,7 +113,61 @@ if variable > 19 { // if statement, { must be in the same line as the if keyword
 	fmt.print("else condition") // code to execute if all previous conditions were false
 } 
 
-// Switch Statement
+// Switch Statement with Expression
+switch variable { // switch statement with an expression, { must be in the same line as the switch keyword, will compare the expression with the cases and execute the block of the first matching case
+case 10: // case statement, case must be in the same line as the case keyword, will execute its block if the expression matches the case value
+	fmt.print("case 10") // code to execute if the case matches
+	fallthrough // fallthrough statement, used to transfer control to the next case, must be the last statement in the case block, will not check the next case condition
+case 20, 30: // case statement with multiple values
+	fmt.print("case 20 or 30") // code to execute if the case matches any of the values
+default: // default case, default must be in the same line as the default keyword, will execute its block if no other case matches
+	fmt.print("default case") // code to execute if no other case matches
+}
+
+// Switch Statement with Initialization
+switch variable2 := 10; variable2 { // switch statement with initialization, same as above with initialization statement that must be in the same line as the switch keyword and separated from the expression by a semicolon
+}
+
+// Switch Statement without Expression
+switch { // switch statement without an expression, equivalent to switch true, will execute the block of the first case whose condition is true, same as if statement
+case variable > 19: // case statement with a condition, will execute its block if the condition is true
+	fmt.print("case variable > 19")
+	fallthrough // fallthrough statement, same as in switch with expression
+case variable < 10: // case statement with another condition
+	fmt.print("case variable < 10")
+default: // default case, will execute its block if no other case condition is true
+	fmt.print("default case")
+}
+
+
+
+// =====================================
+// ========== LOOP STATEMENTS ==========
+// =====================================
+
+// Simple For Loop
+for i := 0; i < 10; i++ { // for loop with initialization and condition and post statement separated by semicolons, { must be in the same line as the for keyword, will execute its block as long as the condition is true
+	fmt.print(i) // code to execute in each iteration of the loop 
+	if i == 5 { 
+		break // break statement, used to exit from the loop
+	} else if i == 3 {
+		continue // continue statement, used to skip the current iteration and go to the next one
+	}
+}
+
+// For Loop with just Condition
+for variable < 10 { // for loop with just a condition, equivalent to while loop, will execute its block as long as the condition is true, { must be in the same line as the for keyword, continune and break work the same as in simple for loop
+	fmt.print(variable) // code to execute in each iteration of the loop
+}
+
+// Forever Loop
+for { // for with no condition, will execute its block forever, { must be in the same line as the for keyword, equivalent to for true, continune and break work the same as in simple for loop
+	break
+}
+
+// For Range Loop
+
+// Labeled For Loop
 
 
 
