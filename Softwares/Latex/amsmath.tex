@@ -1,0 +1,72 @@
+\usepackage{amsmath} % package for advanced math typesetting
+
+% Inline math mode
+This is an inline math expression: $E = mc^2$. % equation within $...$ is inlined with the text
+
+
+% Display math mode
+\[ % equation within \[...\] is displayed on its own line, centered, and not numbered, can be in one line
+E = mc^2
+\]
+
+
+% Math Environments
+
+\begin{equation} % start of equation environment, for numbered equations
+    E = mc^2
+\end{equation} % end of equation environment
+
+\begin{align} % start of align environment, for multiple aligned equations, & indicates alignment point with other lines, \\ ends the line
+    a^2 + b^2 &= c^2 \\ 
+    e^{i\pi} + 1 &= 0
+\end{align} % end of align environment
+
+\begin{gather} % start of gather environment, for multiple equations without alignment, \\ ends the line
+    F = ma \\
+    V = IR
+\end{gather} % end of gather environment
+
+\begin{multline} % start of multline environment, for long equations that span multiple lines, \\ indicates line break
+    f(x) = a_0 + a_1x + a_2x^2 + a_3x^3 + a_4x^4 \\
+    + a_5x^5 + a_6x^6 + a_7x^7 + a_8x^8 + a_9x^9
+\end{multline} % end of multline environment
+
+\begin{cases} % start of cases environment, for piecewise functions, & separates the condition from the expression, \\ ends the line
+    f(x) = x^2 & \text{if } x \geq 0 \\
+    f(x) = -x^2 & \text{if } x < 0
+\end{cases} % end of cases environment
+
+
+% Commands
+\text{Normal text} % used inside a math mode or environment for normal text
+\frac{a}{b} % fraction with numerator a and denominator b
+\sqrt{x} % square root of x
+\infty % infinity symbol
+\sum_{n=1}^{\infty} \frac{1}{n^2} % summation symbol with {start}^{end} followed by expression
+\int_a^b f(x) \, dx % integral symbol with {lower}^{upper} followed by integrand, \ adds space before dx
+\lim_{x \to \infty} f(x) % limit with {variable \to value} followed by expression
+\alpha, \beta, \gamma, \delta, \epsilon, \zeta, \eta, \theta, \iota, \kappa, \lambda, \mu, \nu, \xi, \omicron, \pi, \rho, \sigma, \tau, \upsilon, \phi, \chi, \psi, \omega % Greek letters in math mode 
+
+
+% Math Functions
+\sin \theta % sine function
+\cos \theta % cosine function
+\tan \theta % tangent function
+\log x % logarithm function
+\ln x % natural logarithm function
+\exp x % exponential function
+\max(a, b) % maximum function
+\min(a, b) % minimum function
+\limsup_{n \to \infty} a_n % limit superior
+\liminf_{n \to \infty} a_n % limit inferior
+
+
+% Custom Math Functions
+\operatorname{Var}(X) % variance operator
+\operatorname{Cov}(X, Y) % covariance operator
+\operatorname{E}[X] % expectation operator
+\operatorname{Pr}(A) % probability operator
+
+
+% Math Operators
+x
