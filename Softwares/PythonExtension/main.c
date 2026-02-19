@@ -63,12 +63,23 @@ PyObject * MyObject_get_value(MyObject *self, PyObject* args) { // method for th
     return PyLong_FromLong(self->value);
 }
 
-static PyMethodDef MyObject_methods[] = { // methods table defition for the class, same as module method definitions
+PyObject* MyObject_value_getter(MyObject *self, void *closure) { // getter function for the class, must have this signature, where first argument is a pointer to the instance of the underlying C structure representing the type and second argument is a void* closure that can be used to pass additional data to the getter function
+    return PyLong_FromLong(self->value); // return the value of the member as a Python object
+}
+
+int MyObject_value_setter(MyObject *self, PyObject *value, void *closure) { // setter function for the class, must have this signature, where first argument is a pointer to the instance of the underlying C structure representing the type, second argument is a PyObject* representing the value to set and third argument is a void* closure that can be used to pass additional data to the setter function
+    long value;
+    PyLong_FromLong(value); 
+    self->value = value; 
+    return 0; // return 0 on success and -1 on failure
+}
+
+PyMethodDef MyObject_methods[] = { // methods table defition for the class, same as module method definitions
     {"get_value", MyObject_get_value, METH_NOARGS, "Return the stored value"},
     {NULL}
 };
 
-static PyMemberDef MyObject_members[] = { // members table definition for the class, an array of PyMemberDef structures that define the members of the class
+PyMemberDef MyObject_members[] = { // members table definition for the class, an array of PyMemberDef structures that define the members of the class
     {
         .name = "value", // name of the member that will be used in Python to access the member 
         .type = T_LONG, // type of the member, can be one of the following : 
@@ -91,6 +102,17 @@ static PyMemberDef MyObject_members[] = { // members table definition for the cl
     {NULL} // last entry must be a sentinel with NULL values to indicate the end of the array
 };
 
+PyGetSetDef MyObject_getters_setters[] = { // getters and setters table definition for the class, an array of PyGetSetDef structures that define the getters and setters for whhich arent directly accessible by offset from the underlying C structure
+    {
+        .name = "value", // name of the attribute that will be accessed in Python
+        .get = (getter)MyObject_value_getter, // pointer to the getter function
+        .set = (setter)MyObject_value_setter, // pointer to the setter function
+        .doc = "stored value", // docstring for the attribute, can be NULL if no documentation is provided
+        .closure = NULL // closure for the getter and setter, can be used to pass additional data to the getter and setter functions, can be NULL if not used
+    },
+    {NULL} // last entry must be a sentinel with NULL values to indicate the end of the array
+};
+
 PyTypeObject MyObjectType = { // type object definition for the class, an instance of PyTypeObject structure that defines the properties and behavior of the type, not all members must be initialized
     .ob_base = PyVarObject_HEAD_INIT(NULL, 0) // Macro to initialize the type object structure, takes two arguments: pointer to the base type (NULL for new types) and size of the variable part of the object (0 for non-variable types)
     .tp_name = "module.MyObject", // name of the type in the format "ModuleName.TypeName", this is the name that will be used to import and create instances of the type in Python 
@@ -102,6 +124,7 @@ PyTypeObject MyObjectType = { // type object definition for the class, an instan
     .tp_doc = "Simple example class", // docstring for the type, can be NULL if no documentation is provided
     .tp_methods = MyObject_methods, // pointer to the methods table for the type
     .tp_members = MyObject_members, // pointer to themembers table for the type
+    .tp_getset = MyObject_getters_setters, // pointer to the getters and setters table for the type, optional
     .tp_init = MyObject_init, // pointer to the init function of the type
     .tp_new = PyType_GenericNew, // pointer to the new function of the type, use PyType_GenericNew for default behavior 
 };

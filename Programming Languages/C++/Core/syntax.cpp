@@ -75,7 +75,7 @@ volatile int volatile_var;  // tells compiler can't optimize this variable
 extern int extern_var; // defined in another file
 extern "C" int c_linkage_var; // defined in another translation unit, uses C linkage for name mangling
 extern "C++" int cpp_linkage_var; // defined in another translation unit, uses C++ linkage for name mangling, this is the default
-extern "C" { // extern block with C linkage
+extern "C" { // extern block with C linkage, can contain multiple declarations of variables and functions, all with C linkage
 	int c_linkage_var1;
 }
 static int static_var; // has internal linkage, only visible in the current translation unit
@@ -93,10 +93,10 @@ int (*function_ptr)(int) = &function; // can also use address-of operator
 int (&function_ref)(int) = function; // function reference
 auto auto_var = 50; // type deduced from initializer without cv-quantifiers so must be initialized
 decltype(auto_var) decltype_var = const_var; // type deduced from initializer with cv-qualifiers
-auto [x, y] = my_struct_var; // structured binding to a copy of my_struct_var, x and y are references to members of the copy
-auto& [x, y] = my_struct_var; // structured binding that references my_struct_var, x and y are references to members of my_struct_var
-auto&& [x, y] = my_struct_var; // structured binding to an rvalue of my_struct_var, x and y are references to members of the rvalue
-auto [...pack] = my_struct_var; // pack introduction from structured binding mtaches the rest of non-bound members into a parameter pack
+auto [x, ...pack, y] = my_struct_var; // structured binding to a copy of struct, bound variables are references to the members of a copy of the struct, the remaining members of the struct if any are captured in the pack if any which can be in the beginning, middle, end or alone in the binding, but can only be one at most
+auto& [x, ...pack, y] = my_struct_var; // structured binding to an lvalue reference to struct, bound variables are references to the members of the struct
+auto&& [x, ...pack, y] = my_struct_var; // structured binding to an rvalue to struct, same as lvalue reference when the struct is an lvalue
+auto&& [x, ...pack, y] = MyStruct{1, 2}; // structured binding to an rvalue to a tmeporary struct, bound variables are references to the members of the temporary struct which has extended lifetime
 int MyStruct::* ptr_to_member = &MyStruct::x; // pointer to member x of MyStruct
 void (MyStruct::* ptr_to_member_function)() = &MyStruct::method; // pointer to member function method of MyStruct
 int _ = 4; char _ = 'a'; // placeholder variable with no name, can be redeclared as many times with any type, can't be accessed
@@ -165,7 +165,7 @@ int direct_copy_init = int(30); // copy initialization, same as direct initializ
 int uniform_init{20}; // uniform initialization, no narrowing conversion allowed, braces can be empty
 int uniform_copy_init = int{30}; // uniform copy initialization, same as uniform initialization
 int aggregate_init = {40}; // aggregate initialization, same as uniform initialization, braces can be empty
-MyStruct designated_init = {.x = 1, .y = 2}; // designated initialization, doesn't require all members, order must match type definition
+MyStruct designated_init = {.x = 1, .y = 2}; // designated aggregate initialization, doesn't require all members, order must match type definition
 
 
 
@@ -353,6 +353,7 @@ protected: // protected access specifier, members are accessible from inside the
 	int operator-(); // overload the unary - operator, same for ~, prefix ++, prefix --, 
 	int operator++(int); // overload the postfix ++ operator, same for postfix -- 
 	operator int(); // conversion operator, works for any type, must return a value of the type being converted to
+	operator auto(); // conversion operator with auto return type, return type is deduced from the return statement
 	void operator()(); // call operator, allows the object to be called like a function
 	void operator[](int index); // subscript operator, allows the object to be indexed like an array, can take any number of parameters
 	void operator*(); // dereference operator, doesn't take any parameters unlike multiplication operator
