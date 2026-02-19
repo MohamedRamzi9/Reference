@@ -55,7 +55,7 @@ int_var = 0b101010 # binary literal
 
 str_var = '9' # string literal
 str_var = "Hello, World!" # also string literal
-str_var = f'Formatted string with value: {int_var}' # formatted string, starts with f, and any expression inside curly braces will be evaluated and inserted into the string after calling str() on the result
+str_var = f'Formatted string with value: {int_var}, {int_var=}, {{{int_var}}}' # formatted string, starts with f, and any expression inside curly braces will be evaluated and inserted into the string after calling str() on the result, adding = after the expression will include the expression itself in the output for debugging purposes, use 3 curly braces to include a literal curly brace in the output, 2 to escape the them for nested expressions
 str_var = r'Raw string with backslash \n not interpreted' # raw string, starts with r, and any escape sequences will be treated as literal characters
 str_var = '''This is a
 multi-line string
@@ -63,6 +63,8 @@ using triple quotes.
 '''
 str_var = fr"""Multi line formatted raw string with value: {int_var} 
 and escape sequences not interpreted"""
+str_var = f"{{value:[fill][align][sign][#][0][width][grouping][.precision][type]}}" # supports the format specification mini-language
+
 
 float_var = 10.0 # float literal
 float_var = 1.34340e5 # float literal with scientific notation
@@ -134,7 +136,7 @@ is_not_result = obj_var1 is not obj_var2 # is not operator, checks if both varia
 in_result = 5 in [1, 2, 3, 4, 5] # in operator, checks if the value is present in the iterable
 not_in_result = 5 not in [1, 2, 3, 4, 5] # not in operator, checks if the value is not present in the iterable
 
-subscript_result = list_var[2] # subscript operator, arguments can be any valid expression 
+subscript_result = list_var[2] # subscript operator, arguments can be any valid expression
 obj_var1[1, 3] # subscript operator with multiple indices separated by commas
 
 # slice operator
