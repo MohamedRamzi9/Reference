@@ -1,0 +1,131 @@
+
+/* add :
+- image properties
+- font properties
+*/
+/* rewrite :
+- redundant long comments
+*/
+
+/* ============================== */
+/* ========== COMMENTS ========== */
+/* ============================== */
+
+/* This a comment 
+can span multiple lines */
+
+
+
+/* =============================== */
+/* ========== SELECTORS ========== */
+/* ============================== */
+
+/* Basic selectors */
+my_tag {} /* element selector, selects all html elements with this tag */
+#my_id {} /* id selector, selects the element with this id */
+.my_class {} /* class selector, selects all elements with this class */
+my_tag[my_attribute="my_value"] {}  /* attribute selector, selects all elements with the selector and has the specified attribute with the specified value, the value is optinal */
+my_tag:hover {} /* pseudo-class selector, selects all elements with the selector when they are in the specified state */
+my_tag::before {} /* virtual element selector, selects a specific part of the element */
+* {} /* universal selector, selects all elements */
+
+/* Chaining selectors */
+my_tag .my_class #my_id {} /* descendant selector, selects all elements which matches the last selector and are direct or indirect descendants of the previous selectors */
+my_tag > .my_class > #my_id {} /* child selector, selects all elements which matches the last selector and are direct children of the previous selectors */
+my_tag + .my_class {} /* adjacent sibling selector, selects all elements which matches the last selector and are direct siblings of the previous selector */
+my_tag ~ .my_class {} /* general sibling selector, selects all elements which matches the last selector and have the same parent as the previous selector */
+my_tage + .my_class ~ #my_id > .my_class {} /* combining different selectors */
+
+/* Nesting selectors */
+my_tag { 
+    /* nesting selectors, selects all elements with the most nested selector and following the nesting hierarchy */
+    .my_class {} /* same as descendant selector */
+    > .my_class {} /* same as child selector */
+    + .my_class {} /* same as adjacent sibling selector */
+    ~ .my_class {} /* same as general sibling selector */
+}
+
+
+
+/* ================================ */
+/* ========== PROPERTIES ========== */
+/* ================================ */
+
+.my_style {
+
+    /* any color value can be one of the following formats :
+        - color name : red, blue...
+        - hexadecimal value prefixed with # : #ff0000
+        - rgb value : rgb(255, 0, 0)
+        - rgba value : rgba(255, 0, 0, 1)
+    */
+    /* any length value can be one of the following formats :
+        - absolute length : cm, mm, in, px, pt, pc
+        - relative length to the parent element : em, ex
+        - relative length to the root element : rem
+        - relative length to the viewport : vw, vh, vmin, vmax
+        - percentage relative to the value of the same property of the parent element : %
+        - auto : the browser calculates the value based on the content and other properties
+
+    */
+    color: red; /* sets the text font color, can be any color format */ 
+    background-color: #0000ff; /* sets the element background color, can be any color format */
+    
+    width: 100px; /* sets the element width, can be any length format */
+    height: 5cm; /* sets the element height, can be any length format */
+    min-width: 5in; /* sets the minimum width of the element, can be any length format */
+    min-height: 25mm; /* sets the minimum height of the element, can be any length format */
+    max-width: 12vw; /* sets the maximum width of the element, can be any length format */
+    max-height: 10vh; /* sets the maximum height of the element, can be any length format */
+    
+    margin-top: 10px; /* sets the top margin of the element, can be any length format */
+    margin-right: 14%; /* sets the right margin of the element, can be any length format */
+    margin-bottom: 1em; /* sets the bottom margin of the element, can be any length format */
+    margin-left: auto; /* sets the left margin of the element, can be any length format */
+    margin: auto; /* sets all margins of the element to the same value, can be any length format */
+    margin: 0px 10px; /* sets the top and bottom margins to the first value and the right and left margins to the second value */
+    margin: 0px 10px 5px; /* sets the top, left and right, bottom margins respectively */
+    margin: 0px 10px 5px 15px; /* sets the individual margins to the values in the order of top, right, bottom and left */
+    
+    padding-top: 10px; /* sets the top padding of the element, can be any length format */
+    padding-right: 14%; /* sets the right padding of the element, can be any length format */
+    padding-bottom: 1em; /* sets the bottom padding of the element, can be any length format */
+    padding-left: auto; /* sets the left padding of the element, can be any length format */
+    padding: auto; /* sets all paddings of the element to the same value, can be any length format */
+    padding: 0px 10px; /* sets the top and bottom paddings to the first value and the right and left paddings to the second value */
+    padding: 0px 10px 5px; /* sets the top, left and right, bottom paddings respectively */
+    padding: 0px 10px 5px 15px; /* sets the individual paddings to the values in the order of top, right, bottom and left */
+
+    border-width: 5px; /* sets the width of the element border, can be any length format */
+    border-top-width: 5px; /* sets the width of the top border of the element, can be any length format */
+    border-right-width: 5px; /* sets the width of the right border of the element, can be any length format */
+    border-bottom-width: 5px; /* sets the width of the bottom border of the element, can be any length format */
+    border-left-width: 5px; /* sets the width of the left border of the element, can be any length format */
+
+    border-style: solid; /* sets the style of the element border, can be one of the following values : none, hidden, dotted, dashed, solid, double, groove, ridge, inset, outset */
+    border-top-style: solid; /* sets the style of the top border of the element, uses same values as border-style */
+    border-right-style: solid; /* sets the style of the right border of the element, uses same values as border-style */
+    border-bottom-style: solid; /* sets the style of the bottom border of the element, uses same values as border-style */
+    border-left-style: solid; /* sets the style of the left border of the element, uses same values as border-style */
+
+    border-color: rgb(255, 0, 0); /* sets the color of the element border, can be any color format */
+    border-top-color: rgb(255, 0, 0); /* sets the color of the top border of the element, can be any color format */
+    border-right-color: rgb(255, 0, 0); /* sets the color of the right border of the element, can be any color format */
+    border-bottom-color: rgb(255, 0, 0); /* sets the color of the bottom border of the element, can be any color format */
+    border-left-color: rgb(255, 0, 0); /* sets the color of the left border of the element, can be any color format */
+
+    border: 5px solid rgb(255, 0, 0); /* sets the width, style and color of the element border in one declaration */
+    border-top: 5px solid rgb(255, 0, 0); /* sets the width, style and color of the top border of the element in one declaration */
+    border-right: 5px solid rgb(255, 0, 0); /* sets the width, style and color of the right border of the element in one declaration */
+    border-bottom: 5px solid rgb(255, 0, 0); /* sets the width, style and color of the bottom border of the element in one declaration */
+    border-left: 5px solid rgb(255, 0, 0); /* sets the width, style and color of the left border of the element in one declaration */
+
+    border-top-left-radius: 10px; /* sets the radius of the top left corner of the element border, can be any length format */
+    border-top-right-radius: 10px; /* sets the radius of the top right corner of the element border, can be any length format */
+    border-bottom-right-radius: 10px; /* sets the radius of the bottom right corner of the element border, can be any length format */
+    border-bottom-left-radius: 10px; /* sets the radius of the bottom left corner of the element border, can be any length format */
+    border-radius: 10px; /* sets the radius of all corners of the element border to the same value, can be any length format */
+    border-radius: 10px 5px; /* sets the radius of the top left and bottom right corners to the first value and the radius of the top right and bottom left corners to the second value */
+    border-radius: 10px 5px 15px; /* sets the top left, top right and bottom left, bottom right corner radiuses respectively */
+
+}
