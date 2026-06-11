@@ -1,20 +1,12 @@
 #include "rmz_print.hpp"
+#include <meta>
 
-struct S {
-	int a;
-	float b;
-	operator auto() const {
-		return false;
-	}
+enum E {
+    SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY
 };
 
 int main() {
-
-	S s{42, 3.14f};
-	if (auto [a, b] = s) {
-		rmz::println("a: {}, b: {}", a, b);
-	} else {
-		rmz::println("Conversion to bool failed");
-	}
-	
+    template for (constexpr auto info : define_static_array(enumerators_of(^^E))) {
+        rmz::println(display_string_of(info));
+    }
 }

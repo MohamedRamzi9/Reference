@@ -670,6 +670,11 @@ int function(int x) {
 [[noreturn, deprecated]] [[maybe_unused]] void deprecated_noreturn_function(); // multiple attributes can be applied to the same or different declaration
 int x [[indeterminate]]; // indeterminate attribute, uses of this variable before initialization will not be diagnosed as undefined instead of erroneous behavior
 
+[[gnu::unused]] int gnu_unused_var; // namepsace attribute, allows using non standard attributes that are specified by the compiler
+[[using gnu: unused, deprecated("reason")]] int gnu_unused_deprecated_var; // using namespace attribute, shorthand for applying multiple namespace attributes to the same declaration
+
+
+
 // ==================================
 // ========== TYPE CASTING ==========
 // ==================================
@@ -921,3 +926,154 @@ export import A; // module export import declaration, same as the previous one b
 import :B; // module partition import declaration, allows importing a partition of a module, can be used inside the main module interface or implementation unit as well as in other partitions of the same module
 export import :B; // module partition export import declaration, same as the previous one but also exports all the imported declarations and definitions
 
+
+
+// ===============================
+// ========== CONTRACTS ==========
+// ===============================
+
+
+
+// ================================
+// ========== REFLECTION ==========
+// ================================
+
+#include <meta> // for std::meta::info and reflection functions 
+
+// Lift operator
+constexpr auto global_info = ^^::; // returns reflection of the global namespace
+constexpr auto info = ^^entity; // returns reflection of the entity which can be any of the following : 
+	// type, union
+	// namespace, namespace alias, module, module partition
+	// typedef, type alias
+	// template class, template function, template variable, template lambda, template parameter, non-type template parameter, template template parameter
+	// variable, structured binding
+	// function, function parameter, explicit this parameter
+	// class member variable, class member function, class special member function, bit field, class member variable pointer, class member function pointer, base class relationship (c.Base) 
+	// enumeration, enumerator
+	// lambda, lambda capture
+	// concept
+	// constant expression
+	// operator function, operator function template 
+	// annotation
+
+// Splice operator
+[:info:]; // returns the original entity represented by the reflection info, can be used anywhere and anyhow the original entity can be used
+typename [:type_info:]; // add typename to disambiguate in some contexts when the original entity is a type and not another kind of entity
+template [:template_info:]; // add template to disambiguate in some contexts when the original entity is a template and not another kind of entity
+
+// Reflection functions, live in std::meta namespace, some can be called directly due to argument dependent lookup when the argument is a reflection info
+
+// Interogate functions 
+has_identifier(info); // returns true if the entity has an identifier
+is_public(info); // returns true if the entity is public class member entity
+is_protected(info); // returns true if the entity is protected class member entity
+is_private(info); // returns true if the entity is private class member entity
+is_virtual(info); // returns true if the entity is a virtual class member function or a virtual base class
+is_pure_virtual(info); // returns true if the entity is a pure virtual class member function
+is_override(info); // returns true if the entity is a class member function that overrides a base class virtual function
+is_final(info); // returns true if the entity is a final class or a final class member function
+is_deleted(info); // returns true if the entity is a deleted function
+is_defaulted(info); // returns true if the entity is a defaulted function
+is_user_provided(info); // returns true if the entity is a user provided function and not a compiler generated function
+is_user_declared(info); // returns true if the entity is a user declared function and not a compiler generated function
+is_explicit(info); // returns true if the entity is an explicit constructor or conversion operator
+is_noexcept(info); // returns true if the entity is a function that is declared noexcept
+is_bit_field(info); // returns true if the entity is a bit field
+is_enumerator(info); // returns true if the entity is an enumerator
+is_enumeration(info); // returns true if the entity is an enumeration
+is_const(info); // returns true if the entity is a constant
+is_volatile(info); // returns true if the entity is volatile
+is_mutable_member(info); // returns true if the entity is a mutable class member variable
+is_lvalue_reference_qualified(info); // returns true if the entity is an lvalue reference qualified class member function
+is_rvalue_reference_qualified(info); // returns true if the entity is an rvalue reference qualified class member function
+has_static_storage_duration(info); // returns true if the entity has static storage duration
+has_thread_storage_duration(info); // returns true if the entity has thread storage duration
+has_automatic_storage_duration(info); // returns true if the entity has automatic storage duration
+has_internal_linkage(info); // returns true if the entity has internal linkage
+has_external_linkage(info); // returns true if the entity has external linkage
+has_module_linkage(info); // returns true if the entity has module linkage
+has_c_language_linkage(info); // returns true if the entity has C language linkage
+has_linkage(info); // returns true if the entity has any kind of linkage
+is_complete_type(info); // returns true if the entity is a complete type
+is_enumarable_type(info); 🔴🔴🔴
+is_variable(info); // returns true if the entity is a variable
+is_type(info); // returns true if the entity is a type
+is_type_alias(info); // returns true if the entity is a type alias
+is_namespace(info); // returns true if the entity is a namespace
+is_namespace_alias(info); // returns true if the entity is a namespace alias
+is_function(info); // returns true if the entity is a function
+is_conversion_function(info); // returns true if the entity is a conversion function
+is_operator_function(info); // returns true if the entity is an operator function
+is_literal_operator(info); // returns true if the entity is a literal operator function
+is_special_member_function(info); // returns true if the entity is a class special member function
+is_constructor(info); // returns true if the entity is a constructor
+is_destructor(info); // returns true if the entity is a destructor
+is_default_constructor(info); // returns true if the entity is a default constructor
+is_copy_constructor(info); // returns true if the entity is a copy constructor
+is_move_constructor(info); // returns true if the entity is a move constructor
+is_assignment(info); // returns true if the entity is an assignment operator function
+is_copy_assignment(info); // returns true if the entity is a copy assignment operator function
+is_move_assignment(info); // returns true if the entity is a move assignment operator function
+is_function_parameter(info); // returns true if the entity is a function parameter
+is_explicit_object_parameter(info); // returns true if the entity is an explicit this parameter
+has_default_argument(info); // returns true if the entity is a function that has a parameter with a default argument
+has_ellipsis_parameter(info); // returns true if the entity is a function that has a parameter pack
+is_template(info); // returns true if the entity is a template
+is_function_template(info); // returns true if the entity is a function template
+is_class_template(info); // returns true if the entity is a class template
+is_variable_template(info); // returns true if the entity is a variable template
+is_alias_template(info); // returns true if the entity is a template alias
+is_conversion_function_template(info); // returns true if the entity is a conversion function template
+is_operator_function_template(info); // returns true if the entity is an operator function template
+is_literal_operator_template(info); // returns true if the entity is a literal operator function template
+is_constructor_template(info); // returns true if the entity is a constructor template
+is_concept(info); // returns true if the entity is a concept
+is_value(info); 🔴🔴🔴
+is_object(info); 🔴🔴🔴
+is_structured_binding(info); // returns true if the entity is a structured binding
+is_class_member(info); // returns true if the entity is a class member
+is_non_static_data_member(info); // returns true if the entity is a non static class member variable
+is_static_member(info); // returns true if the entity is a static class member
+is_base(info); // returns true if the entity is a direct base class relationship
+is_namespace_member(info); // returns true if the entity is a namespace member
+has_default_member_initializer(info); // returns true if the entity a class member variable that has a default member initializer
+has_parent(info); // returns true if the entity has a parent entity, for example a class member has the class as a parent
+has_template_arguments(info); // returns true if the entity is a template specialization with provided template arguments
+is_accessible(info, access_context); 🔴🔴🔴
+has_inaccessible_nonstatic_data_members(info, access_context); 🔴🔴🔴
+has_inaccessible_bases(info, access_context); 🔴🔴🔴
+has_inaccessible_subobjects(info, access_context); 🔴🔴🔴
+
+
+// Query functions
+identifier_of(info); // returns the identifier of the entity as a string_view if it has one, otherwise throws an exception
+u8identifier_of(info); // returns the identifier of the entity as a char8_t u8string_view if it has one, otherwise throws an exception
+display_string_of(info); // returns the display name of the entity as a string_view if it has one, otherwise throws an exception
+u8display_string_of(info); // returns the display name of the entity as a char8_t u8string_view if it has one, otherwise throws an exception
+source_location_of(info); // returns the source location of the entity as a std::source_location 
+type_of(info); // ns a reflection of the type of the entity if it has one, otherwise throws an exception
+object_of(info); 🔴🔴🔴
+constant_of(info); 🔴🔴🔴
+parent_of(info); // returns a reflection of the enclosing parent entity that contains the definition of the entity
+dealias(info); // returns a reflection of the original entity denoted by the alias entity
+template_of(info); // returns a reflection of the template of which the entity is specialized from
+template_arguments_of(info); // returns a vector of reflections of the template arguments used in the specialization of the entity
+parameters_of(info); // returns a vector of reflections of the parameters of a function or function type entity
+variable_of(info); 🔴🔴🔴
+return_type_of(info); // returns a reflection of the return type of a function or function type entity
+struct access_context; 🔴🔴🔴
+members_of(info, access_context); 🔴🔴🔴
+bases_of(info, access_context); // returns a vector of reflections of the direct base class relationships of a class entity which are accessible from the given access context
+static_data_members_of(info, access_context); // same as members_of for which is_variable(info) is true
+nonstatic_data_members_of(info, access_context); // same as members_of for which is_nonstatic_data_member(info) is true
+subobjects_of(info, access_context); // returns a vector containing result of bases_of(info, access_context) followed by the result of members_of(info, access_context)
+enumerators_of(info); // returns a vector of reflections of the enumerators of an enumeration entity 
+struct member_offset { 🔴🔴🔴
+	ptrdiff_t bytes;
+	ptrdiff_t bits;
+	constexpr ptrdiff_t total_bits() const;
+	auto operator<=>(const member_offset&) const = default;
+};
+
+// continue from page 790 of the standard

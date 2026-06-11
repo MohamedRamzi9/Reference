@@ -43,7 +43,8 @@ can be used as a comment when not assigned to a variable
 
 # Declaration
 var = 5 # variable declaration, can be any valid identifier, 
-a, b = 5, 6 # variable declaration with tuple unpacking
+a, b = [5, 6] # variable declaration with unpacking from an iterable, assigns the values from the iterable to the variables in order
+a, b = 5, 6 # same as above with a tuple created implicitly by the comma operator
 a = b = 7 # variable declaration with multiple assignments, starts from the rightmost value and assigns the value to all variables on the left
 a: int = 5 # variable declaration with type hints, helps the interpreter and IDEs to understand the type of the variable
 

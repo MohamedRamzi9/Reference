@@ -14,7 +14,6 @@
             >{\raggedright\arraybackslash}p{3cm}| % fixed width column, left aligned text, not justified
             >{\raggedleft\arraybackslash}p{3cm}| % fixed width column, right aligned text, not justified
         }
-        \centering % center align the table, \raggedright for right, or \raggedleft for left
         \hline % horizontal line on top
         Header 1 & Header 2 & Header 3 \\ % table headers, & separates columns, \\ ends the row
         \hline % horizontal line
@@ -25,7 +24,8 @@
     
     \begin{tabularx}{\textwidth}{|X|X|X|} % start of tabularx environment with specified width (here \textwidth), X columns auto-adjust width to fit their content
     \end{tabularx} % end of tabularx environment
-
+    
+    \centering % center align the table, \raggedright for right, or \raggedleft for left
     \caption{Basic Table} % caption for the table
     \label{tab:basic_table} % label for referencing the table
 \end{table} % end of table environment

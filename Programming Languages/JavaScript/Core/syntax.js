@@ -105,7 +105,8 @@ assign ??= 'default'; // nullish coalescing assignment, assigns right operand if
 
 // Array Spread Operator
 let array2 = [0, ...array, 4, 5]; // array spread operator, expands elements of an array into another array
-function_with_params(...array); // using spread operator to pass array elements as individual arguments to a function
+
+delete object.key; // delete operator, removes a property from an object, returns true if successful or property doesn't exist, otherwise returns false
 
 
 
@@ -184,15 +185,23 @@ do { // do-while loop, executes block at least once and then continues to execut
 function function_declaration() { // function declaration with no parameters
     return 'Hello'; // return statement, returns value from function and exits the function
 }
-function function_with_params(param1, param2 = 'default', ...restParams) {
+function function_with_params(param1, param2 = 'default', ...restParams) { // function declaration with positional parameter, default parameter, and Rest parameters which collects remaining arguments into an array, there can only be one Rest parameter and it must be the last parameter
     function_with_params(...param1); // forwarding Rest parameters using spread syntax to another function 
-} // function declaration with positional parameter, default parameter, and Rest parameters which collects remaining arguments into an array
+} 
+function function_with_object_mapping(param, {key1, key2 = 'value'}) {} // function declaration with object parameter mapping, assigns to each parameter the value of corresponding property from the passed object argument, unmatched parameters will be assigned undefined or default values if provided, can be used multiple times in the same function  
 const function_expression = function(){}; // anonymous function declation
-const named_function_expression = function namedFunc() { // named function expression declaration 
-    namedFunc(); // recursive call to the named function expression
+const named_function_expression = function named_func() { // named function expression declaration 
+    named_func(); // recursive call to the named function expression
 }; 
 const arrow_function = (param1, param2 = 'default', ...restParams) => 'Hello'; // arrow function with all types of parameters (can be by empty) and implicit return when body is an expression
 const arrow_function_block = param => { console.log(param); }; // arrow function with a parameter (parentheses are optional if only one parameter) and a block body which can contain multiple statements and optional return
+async function async_function() { // async function declaration, returns a Promise object, can use await keyword inside the function to wait for Promises to resolve
+    await new Promise(resolve => setTimeout(resolve, 1000)); // await expression, waits for the Promise to resolve and returns the resolved value, can only be used inside async functions
+}
+
+function_with_params(2); // function calling with positional argument and using default argument
+function_with_params(1, 2, ...array); // function calling with positional arguments, overriding default argument, and using spread operator to pass array elements as individual arguments to a function
+function_with_object_mapping(1, {key1: 'value1'}); // function calling with object argument for object parameter mapping by passing an object with matching properties
 
 
 
@@ -240,8 +249,7 @@ class BaseClass { // class declaration
     }
 }
 let instance = new BaseClass(10); // creating an instance of the class using new keyword and passing parameters to constructor
-instance?. // optional chaining, ?. checks if instance is not null or undefined before accessing method or attribute, otherwise returns undefined
-method?.(20);  // optional chaining, ?. checks if method exists before calling it with parameters, otherwise returns undefined
+instance?.method?.(20); // optional chaining, ?. checks if variable is not null or undefined before accessing attribute or calling method, otherwise returns undefined and skips the rest of the expression
 
 // Inheritance
 class DerivedClass extends BaseClass { // class declaration with inheritance using extends keyword
@@ -275,3 +283,5 @@ import defalt_function from './module.js'; // default import, imports the defaul
 import defalt_function, { exported_variable } from './module.js'; // default import can be combined with named imports in a single statement 
 import * as Module from './module.js'; // namespace import, imports all exports from a module as properties of an object, which can be accessed using dot notation, default export is available as Module.default
 const module = import('./module.js'); // dynamic import, returns a promise that resolves to the module object when the module is loaded, non blocking
+
+
