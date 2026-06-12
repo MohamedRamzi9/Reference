@@ -939,6 +939,7 @@ export import :B; // module partition export import declaration, same as the pre
 // ================================
 
 #include <meta> // for std::meta::info and reflection functions 
+std::meta::info 🔴🔴🔴
 
 // Lift operator
 constexpr auto global_info = ^^::; // returns reflection of the global namespace
@@ -1069,11 +1070,18 @@ static_data_members_of(info, access_context); // same as members_of for which is
 nonstatic_data_members_of(info, access_context); // same as members_of for which is_nonstatic_data_member(info) is true
 subobjects_of(info, access_context); // returns a vector containing result of bases_of(info, access_context) followed by the result of members_of(info, access_context)
 enumerators_of(info); // returns a vector of reflections of the enumerators of an enumeration entity 
-struct member_offset { 🔴🔴🔴
-	ptrdiff_t bytes;
-	ptrdiff_t bits;
-	constexpr ptrdiff_t total_bits() const;
+struct member_offset { // returned by offset_of(info)
+	ptrdiff_t bytes; // the number of real bytes occupied by the member 🔴🔴🔴
+	ptrdiff_t bits; // the number of padding bits added for the member to satisfy alignment requirements 🔴🔴🔴
+	constexpr ptrdiff_t total_bits() const; // returns bytes * CHAR_BIT + bits
 	auto operator<=>(const member_offset&) const = default;
 };
+offset_of(info); // returns a member_offset object containing the offset of a class member entity from the start of the object
+size_of(info); // returns the size in bytes of the entity as size_t
+alignment_of(info); // returns the alignment in bytes of the entity as size_t
+bit_size_of(info); // returns the size of a bit field entity in bits as size_t
+annotations_of(info); // returns a vector of reflections of the annotations of the entity
+annotations_of_with_type(info, type); // returns a vector of reflections of the annotations of the entity where remove_const(type_of(annotation)) == remove_const(type)
 
-// continue from page 790 of the standard
+
+// continue from page 793 of the standard
