@@ -1,4 +1,6 @@
 
+// continue from https://youtu.be/8uiZC0l4Ajw?si=fqBE-A_c9HuQvzmc&t=1871
+
 // ==============================
 // ========== PACKAGES ==========
 // ==============================
@@ -44,12 +46,20 @@ var variable uint64 // 64-bit unsigned integer variable, range: [0, 2^64[, defau
 var variable float32 // 32-bit floating-point variable, default initialized to 0
 var variable float64 // 64-bit floating-point variable, default initialized to 0
 var variable bool // boolean variable, can only be true or false, default initialized to false
-var variable string // string variable, default initialized to ""
+var variable string // string variable, default initialized to "", strings are immutable
+var variable byte // alias for uint8, default initialized to 0
+var variable rune // alias for int32, default initialized to 0, represents a Unicode code point
 var variable complex64 // 64-bit complex number variable, default initialized to (0+0i)
 var variable complex128 // 128-bit complex number variable, default initialized to (0+0i)
-var variabel error // error variable, default initialized to nil, used to represent an error condition
+var variable error // error variable, default initialized to nil, used to represent an error condition
+var array[4] int // array variable, fixed size, default initialized to the default value of the type
+var slice[] int // slice variable, dynamic size, default initialized to 🔴🔴🔴
+var map_[string]int // map variable, key-value pairs, default initialized to 🔴🔴🔴
 
-
+[2]int{4, 5} // creates a temporary array for use in assignement or function call, the size must match the number of elements
+[...]int{4, 5} // same as above but the size is inferred from the number of elements
+[]int{4, 5} // creates a temporary slice for use in assignement or function call
+map[string]int{"key1": 1, "key2": 2} // creates a temporary map for use in assignement or function call
 
 // ===============================
 // ========== OPERATORS ==========
@@ -61,7 +71,6 @@ var subtraction = 12 - 5 // subtraction operator, subtracts two operands of same
 var multiplication = 12 * 5 // multiplication operator, multiplies two operands of same numeric type
 var division = 12 / 5 // division operator, divides two operands of same numeric type, if both operands are integers the result will be an integer with the decimal part truncated
 var modulus = 12 % 5 // modulus operator, returns remainder of division of two operands of same integer type
-variable++ // increment operator, increases value of variable by 1
 
 // Comparison Operators
 var equal = 2 == 2 // equal operator, returns true if both operands are equal
@@ -75,7 +84,6 @@ var less_than_or_equal = 2 <= 2 // less than or equal operator, returns true if 
 var logical_and = true && false // logical AND operator, returns false if first operand is false or both operands are false, otherwise returns true
 var logical_or = true || false // logical OR operator, returns true if first operand is true or both operands are true, otherwise returns false
 var logical_not = !true // logical NOT operator, returns true if operand is false, otherwise returns false
-variable-- // decrement operator, decreases value of variable by 1
 
 // Bitwise Operators
 var bitwise_and = 12 & 5 // bitwise AND operator, performs bitwise AND on two operands of same integer type
@@ -86,6 +94,8 @@ var left_shift = 12 << 2 // left shift operator, shifts the bits of the first op
 var right_shift = 12 >> 2 // right shift operator, shifts the bits of the first operand to the right by the number of bits specified by the second operand, fills the vacated bits with 0 for unsigned integers and with the sign bit for signed integers
 
 // Assignment Operators
+variable++ // increment operator, increases value of variable by 1 and returns the value before incrementing 🔴🔴🔴
+variable-- // decrement operator, decreases value of variable by 1 and returns the value before decrementing 🔴🔴🔴
 variable += 5 // addition assignment operator, adds the right operand to the left operand and assigns the result to the left operand
 variable -= 5 // subtraction assignment operator, subtracts the right operand from the left operand and assigns the result to the left operand
 variable *= 5 // multiplication assignment operator, multiplies the left operand by the right operand and assigns the result to the left operand
@@ -98,6 +108,17 @@ variable &^= 5 // bit clear assignment operator, performs bit clear on the left 
 variable <<= 5 // left shift assignment operator, performs left shift on the left operand by the number of bits specified by the right operand and assigns the result to the left operand
 variable >>= 5 // right shift assignment operator, performs right shift on the left operand by the number of bits specified by the right operand and assigns the result to the left operand
 
+"string1" + "string2" // string concatenation operator, concatenates two strings and returns a new string
+
+&variable // address operator, returns the address of the variable or array element
+
+variable := array[0] // array and string subscript operator, used to access the elements of an array or string at the specified index, must not be out of bounds 
+array[1:3] // array slice operator, returns a new slice containing the elements [start, end)
+slice... 🔴🔴🔴 // spread operator on slices, where to use is !
+
+variable := map["key"] // map subscript operator, used to access the value of a map at the specified key, returns the default value of the value type if the key does not exist
+variable, ok := map["key"] // same as above, also returns a boolean indicating if the key exists 
+delete(map, "key") // delete statement, removes the key-value pair from the map with the specified key
 
 
 // ========================================
@@ -161,11 +182,17 @@ for variable < 10 { // for loop with just a condition, equivalent to while loop,
 }
 
 // Forever Loop
-for { // for with no condition, will execute its block forever, { must be in the same line as the for keyword, equivalent to for true, continune and break work the same as in simple for loop
-	break
+for { // for with no condition, will execute its block forever, { must be in the same line as the for keyword, equivalent to for true
+	break //  continune and break work the same as in simple for loop
 }
 
 // For Range Loop
+for index, value := range array { // for range loop, will iterate over the elements of an array, slice or string, index is optional and can be omitted, { must be in the same line as the for keyword
+	break // continune and break work the same as in simple for loop
+}
+for key, value := range map_ { // for range loop over a map, will iterate over the key-value pairs of a map, value is optional and can be omitted, { must be in the same line as the for keyword
+	break // continune and break work the same as in simple for loop
+}  
 
 // Labeled For Loop
 
@@ -181,4 +208,5 @@ func function(param1 int, param2 string) float32 { // function declaration with 
 func function_with_multiple_return() (int, string) { // function declaration with multiple return types separated by a comma and enclosed in parentheses
 	return 0, "" // return statement with multiple return values separated by a comma
 }
+var var3 = function(32, "Hello") // function call with parameters with return value assigned to a variable
 var var1, var2 = function_with_multiple_return() // initialization of multiple variables with the return values of a function

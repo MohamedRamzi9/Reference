@@ -1,12 +1,13 @@
-#include "rmz_print.hpp"
-#include <meta>
 
-enum E {
-    SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY
-};
+#include "rmz_print.hpp"
+#include <ranges>
+
+
 
 int main() {
-    template for (constexpr auto info : define_static_array(enumerators_of(^^E))) {
-        rmz::println(display_string_of(info));
+    std::u8string_view str = u8"Hello, World!";
+    for (auto [i, c] : std::views::enumerate(str)) {
+        rmz::println("Index: {}, Character: {}", i, char(c));
     }
+
 }

@@ -327,6 +327,7 @@ protected: // protected access specifier, members are accessible from inside the
 	static void static_function(); // static member function, can't access non-static members
 	virtual void virtual_function(); // virtual member function, can be overridden in derived classes
 	virtual void pure_virtual_function() = 0; // pure virtual member function, makes the class abstract, cannot be instantiated
+	virtual void final_virtual_function() final; // final virtual member function, cannot be overridden in derived classes, can be applied to pure virtual functions as well
 	void const_function() const; // const member function, can be called on const objects and modify non-mutable members of the class
 	void volatile_function() volatile; // volatile member function, can be called on volatile objects
 	void const_volatile_function() const volatile; // const volatile member function, can be called on const volatile objects
@@ -540,6 +541,21 @@ while (true) { // while loop, braces are optional if the body has only one state
 do { // do-while loop, braces are optional if the body has only one statement
 	// code will be executed at least once
 } while (true); // condition is checked after the loop body
+
+// Enumerating Expansion Statement
+template for (auto&& x : {1, "string", my_struct}) { // expansion statement, unrolls the loop at compile time, elements in the {} list can be lvalue or rvalue of any type, or parameter pack expansion
+	std::println(x); // each iteration the loop variable contains the next value in the {} list
+}
+
+// Destructuring Expansion Statement
+template for (auto&& x : my_struct) { // destructuring expansion statement, unrolls the loop at compile time, the loop variable is a structured binding to the members of the struct
+	std::println(x); // each iteration the loop variable contains the next member of the struct	
+} 
+
+// Iterating Expansion Statement
+template for (constexpr const auto& x : std::array{1, 2, 3}) { // iterating expansion statement, unrolls the loop at compile time, the variable loop must constexpr, the iterable must have the same interface as a range-based for loop but must be constexpr or consteval
+	std::println(x); // each iteration the loop variable contains the next element in the iterable object
+}
 
 
 
@@ -928,6 +944,18 @@ export import :B; // module partition export import declaration, same as the pre
 
 
 
+// ======================================
+// ========== CONSTEVAL BLOCK ===========
+// ======================================
+
+consteval { // consteval block, can be used anywhere a declaration is allowed even inside classes, all code inside the block is evaluated at compile time and have block scope
+	constexpr int x = 10;
+	consteval int double_x() { return x * 2; }
+	static_assert(double_x() == 20, "double_x should return 20");
+}
+
+
+
 // ===============================
 // ========== CONTRACTS ==========
 // ===============================
@@ -939,7 +967,7 @@ export import :B; // module partition export import declaration, same as the pre
 // ================================
 
 #include <meta> // for std::meta::info and reflection functions 
-std::meta::info 🔴🔴🔴
+std::meta::info // reflection opaque type, returned by the lift operator and used as an argument for reflection functions and the splice operator, it can be compared for equality and inequality, and can be default constructed for a null reflection
 
 // Lift operator
 constexpr auto global_info = ^^::; // returns reflection of the global namespace
@@ -954,7 +982,7 @@ constexpr auto info = ^^entity; // returns reflection of the entity which can be
 	// enumeration, enumerator
 	// lambda, lambda capture
 	// concept
-	// constant expression
+	// constant expression 🔴🔴🔴
 	// operator function, operator function template 
 	// annotation
 
@@ -1045,6 +1073,84 @@ is_accessible(info, access_context); 🔴🔴🔴
 has_inaccessible_nonstatic_data_members(info, access_context); 🔴🔴🔴
 has_inaccessible_bases(info, access_context); 🔴🔴🔴
 has_inaccessible_subobjects(info, access_context); 🔴🔴🔴
+can_substitute(info, arguments); // returns true if the template can be substituted with the provided template arguments without any substitution failure or missing template argument
+is_data_member_spec(info); // returns true if the entity represents a data member specification
+is_void_type(info); // returns true if the entity is type void
+is_null_pointer_type(info); // returns true if the entity is type std::nullptr_t
+is_integral_type(info); // returns true if the entity is an integral type
+is_floating_point_type(info); // returns true if the entity is a floating point type
+is_array_type(info); // returns true if the entity is an array type
+is_pointer_type(info); // returns true if the entity is a pointer type
+is_lvalue_reference_type(info); // returns true if the entity is an lvalue reference type
+is_rvalue_reference_type(info); // returns true if the entity is an rvalue reference type
+is_member_object_pointer_type(info); // returns true if the entity is a member object pointer type
+is_member_function_pointer_type(info); // returns true if the entity is a member function pointer type
+is_enum_type(info); // returns true if the entity is an enum type
+is_union_type(info); // returns true if the entity is a union type
+is_class_type(info); // returns true if the entity is a class type
+is_function_type(info); // returns true if the entity is a function type
+is_reflection_type(info); // returns true if the entity is a reflection type
+is_reference_type(info); // returns true if the entity is a reference type
+is_arithmetic_type(info); // returns true if the entity is an arithmetic type
+is_fundamental_type(info); // returns true if the entity is a fundamental type
+is_object_type(info); // returns true if the entity is an object type
+is_scalar_type(info); // returns true if the entity is a scalar type
+is_compound_type(info); // returns true if the entity is a compound type
+is_member_pointer_type(info); // returns true if the entity is a member pointer type
+is_const_type(info); // returns true if the entity is a const type
+is_volatile_type(info); // returns true if the entity is a volatile type
+is_trivially_copyable_type(info); // returns true if the entity is trivially copyable
+is_standard_layout_type(info); // returns true if the entity is a standard layout type
+is_empty_type(info); // returns true if the entity is an empty type
+is_polymorphic_type(info); // returns true if the entity is a polymorphic type
+is_abstract_type(info); // returns true if the entity is an abstract type
+is_final_type(info); // returns true if the entity is a final type
+is_aggregate_type(info); // returns true if the entity is an aggregate type
+is_consteval_only_type(info); // returns true if the entity is a consteval-only type
+is_signed_type(info); // returns true if the entity is a signed type
+is_unsigned_type(info); // returns true if the entity is an unsigned type
+is_bounded_array_type(info); // returns true if the entity is a bounded array type
+is_unbounded_array_type(info); // returns true if the entity is an unbounded array type
+is_scoped_enum_type(info type); // returns true if the entity is a scoped enum type
+is_constructible_type(info, arguments); // returns true if the entity is a nothrow constructible type with the provided type reflections
+is_default_constructible_type(info); // returns true if the entity is a default constructible type
+is_copy_constructible_type(info); // returns true if the entity is a copy constructible type
+is_move_constructible_type(info); // returns true if the entity is a move constructible type
+is_assignable_type(info_dst, info_src); // returns true if the source entity type can be assigned to the destination entity type
+is_copy_assignable_type(info); // returns true if the entity is a copy assignable type
+is_move_assignable_type(info); // returns true if the entity is a move assignable type
+is_swappable_with_type(info1, info2); 🔴🔴🔴	
+is_swappable_type(info); 🔴🔴🔴
+is_destructible_type(info); 🔴🔴🔴
+is_trivially_constructible_type(info); // returns true if the entity is a trivially constructible type
+is_trivially_default_constructible_type(info); 🔴🔴🔴
+is_trivially_copy_constructible_type(info); 🔴🔴🔴
+is_trivially_move_constructible_type(info); 🔴🔴🔴
+is_trivially_assignable_type(info_dst, info_src); 🔴🔴🔴
+is_trivially_copy_assignable_type(info); 🔴🔴🔴
+is_trivially_move_assignable_type(info); 🔴🔴🔴
+is_trivially_destructible_type(info); 🔴🔴🔴
+is_nothrow_constructible_type(info, arguments); // returns true if the entity is a nothrow constructible type with the provided type reflections
+is_nothrow_default_constructible_type(info); // returns true if the entity is a nothrow default constructible type
+is_nothrow_copy_constructible_type(info); // returns true if the entity is a nothrow copy constructible type
+is_nothrow_move_constructible_type(info); // returns true if the entity is a nothrow move constructible type
+is_nothrow_assignable_type(info_dst, info_src); // returns true if the source entity type can be assigned to the destination entity type without throwing an exception
+is_nothrow_copy_assignable_type(info); // returns true if the entity is a nothrow copy assignable type
+is_nothrow_move_assignable_type(info); // returns true if the entity is a nothrow move assignable type
+is_nothrow_swappable_with_type(info1, info2); // returns true if the two entities can be swapped without throwing an exception
+is_nothrow_swappable_type(info); // returns true if the entity is a nothrow swappable type
+is_nothrow_destructible_type(info); // returns true if the entity is a nothrow destructible type
+is_implicit_lifetime_type(info); 🔴🔴🔴
+has_virtual_destructor(info); // returns true if the entity is a class type with a virtual destructor
+has_unique_object_representations(info); 🔴🔴🔴
+is_same_type(info1, info2); // returns true if the two entities are the same type
+is_base_of_type(info_base, info_derived); // returns true if the base entity is a base class of the derived entity
+is_virtual_base_of_type(info_base, info_derived); // returns true if the base entity is a virtual base class of the derived entity
+is_convertible_type(info_src, info_dst); // returns true if the source entity type can be converted to the destination entity type
+is_nothrow_convertible_type(info_src, info_dst); // returns true if the source entity type can be converted to the destination entity type without throwing an exception
+is_layout_compatible_type(info1, info2); // returns true if the two entities have compatible layouts
+is_pointer_interconvertible_base_of_type(info_base, info_derived); 🔴🔴🔴
+is_invocable_type(info, arguments); // returns true if the entity is invocable with the provided type reflections as arguments
 
 
 // Query functions
@@ -1082,6 +1188,13 @@ alignment_of(info); // returns the alignment in bytes of the entity as size_t
 bit_size_of(info); // returns the size of a bit field entity in bits as size_t
 annotations_of(info); // returns a vector of reflections of the annotations of the entity
 annotations_of_with_type(info, type); // returns a vector of reflections of the annotations of the entity where remove_const(type_of(annotation)) == remove_const(type)
+extract(info); 🔴🔴🔴
+substitute(info, arguments); // returns a reflection of the template specialization of the entity with the provided template arguments
+reflect_constant(expression); // returns a reflection of the constant expression
+reflect_function(function); // returns a reflection of the function
+data_member_spec(info, options); 🔴🔴🔴
+define_aggrgate(info, member_descriptors); 🔴🔴🔴
+reference_constructs_from_temporary(info_dst, info_src); 🔴🔴🔴
+reference_converts_from_temporary(info_dst); 🔴🔴🔴
 
-
-// continue from page 793 of the standard
+// continue from page 800 of the standard
