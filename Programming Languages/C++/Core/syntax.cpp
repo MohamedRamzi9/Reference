@@ -24,8 +24,11 @@ struct Object { int a = 9; }; constexpr Object object;
 // ==============================
 
 // this is a single line comment
+
 /*
-this is a multi line comment
+this is 
+a multi line
+comment
 */
 
 
@@ -44,31 +47,36 @@ int main(int argc, char* argv[]) {} // With arguments version
 // ===============================
 
 // Primitive Types
-char char_var; // 8bit equivalent to signed char
-unsigned char unsigned_char_var; // 8bit equivalent to unsigned char
-short short_var; // 16bit equivalent to signed short, signed short int, short int
-unsigned short unsigned_short_var; // 16bit equivalent to unsigned short int, unsigned short
-int int_var; // 32bit equivalent to signed int, long, long int, signed long, signed long int
-unsigned int unsigned_int_var; // 32bit equivalent to unsigned long, unsigned long int
-long long int long_long_int_var; // 64bit equivalent to signed long long, signed long long int, long long
-unsigned long long int unsigned_long_long_int_var; // 64bit equivalent to unsigned long long, unsigned long long  
-float float_var; // 32bit 
-double double_var; // 64bit 
-long double long_double_var; // 128bit or 80bit depending on platform 
-bool bool_var; // 8bit 
-wchar_t wchar_var; // for wide characters, variable length depending on platform
-char16_t char16_var; // for UTF-16 characters
-char32_t char32_var; // for UTF-32 characters
+char char_var; // 8-bit signed integral type, equivalent to signed char 🔴🔴🔴
+unsigned char unsigned_char_var; // 8-bit unsigned integral type, equivalent to unsigned char 🔴🔴🔴
+short short_var; // 16-bit signed integral type, equivalent to signed short, signed short int, short int 🔴🔴🔴
+unsigned short unsigned_short_var; // 16-bit unsigned integral type, equivalent to unsigned short int, unsigned short 🔴🔴🔴
+int int_var; // 32-bit signed integral type, equivalent to signed int, long, long int, signed long, signed long int 🔴🔴🔴
+unsigned int unsigned_int_var; // 32-bit unsigned integral type, equivalent to unsigned long, unsigned long int 🔴🔴🔴
+long long int long_long_int_var; // 64-bit signed integral type, equivalent to signed long long, signed long long int, long long 🔴🔴🔴
+unsigned long long int unsigned_long_long_int_var; // 64-bit unsigned integral type, equivalent to unsigned long long 🔴🔴🔴
+float float_var; // 32-bit floating point type 🔴🔴🔴
+double double_var; // 64-bit floating point type 🔴🔴🔴
+bfloat_t bfloat_var; // 16-bit brain floating point type 🔴🔴🔴 
+float16_t float16_var; // 16-bit floating point type 🔴🔴🔴
+float32_t float32_var; // 32-bit floating point type 🔴🔴🔴
+float64_t float64_var; // 64-bit floating point type 🔴🔴🔴
+float128_t float128_var; // 128-bit floating point type 🔴🔴🔴
+long double long_double_var; // 128-bit or 80-bit depending on platform 🔴🔴🔴 
+bool bool_var; // 8-bit signed integral type 🔴🔴🔴
+wchar_t wchar_var; // for wide characters, variable length depending on platform 🔴🔴🔴
+char8_t char8_var; // UTF-8 variable length characters, 8-bit, 16-bit, 24-bit, 32-bit
+char16_t char16_var; // UTF-16 variable length characters, 16-bit, 32-bit 
+char32_t char32_var; // UTF-32 32-bit characters
 std::nullptr_t nullptr_var; // the type of nullptr
-void* void_ptr_var; // can add more * to make it a pointer to pointer, etc.
-char array_var[10]; // array of 10 chars, size must be known at compile time
+void* void_ptr_var; // pointer type, can have any number of *
+char array_var[10]; // array declaration, size must be known at compile time
 char matrix_var[3][4]; // multidimensional array, the size of each dimension can be variable except the inner most one must be known at compile time
-char& lvalue_ref_var = char_var; // lvalue reference, must be initialized
-char&& rvalue_ref_var = 'a'; // rvalue reference, must be initialized
-MyStruct my_struct_var; // user-defined type
+char& lvalue_ref_var = char_var; // lvalue reference, must be initialized with an lvalue at declaration
+char&& rvalue_ref_var = 'a'; // rvalue reference, must be initialized with an rvalue at declaration
 
-// Decalaration
-int a; // single decaration
+// Declaration
+int a; // single declaration
 int b, c; // multiple declaration of same type
 const int const_var = 10; // must be initialized at declaration
 volatile int volatile_var;  // tells compiler can't optimize this variable
