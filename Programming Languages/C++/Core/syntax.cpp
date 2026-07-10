@@ -37,8 +37,8 @@ comment
 // ========== MAIN FUNCTION ==========
 // ===================================
 
-int main() {} // No arguments version
-int main(int argc, char* argv[]) {} // With arguments version
+int main() {} // starting point of the program, no arguments version
+int main(int argc, char* argv[]) {} // same as above, first argument (can be named anything) is number of command line arguments in argv, second argument (can be named anything) is an array of pointers string literals, first element is the name of the program 
 
 
 
@@ -194,10 +194,10 @@ int result = 1 / 2.; // floating point division, need at least one operand to be
 result /= 3.; // compound division
 int result = 1 % 2; // modulus
 result %= 3; // compound modulus
-result++; // postfix increment, changes the value after usage
-result--; // postfix decrement, changes the value after usage
-++result; // prefix increment, changes the value before usage
---result; // prefix decrement, changes the value before usage
+result++; // postfix increment, returns value before increment
+result--; // postfix decrement, returns value before decrement
+++result; // prefix increment, returns value after increment
+--result; // prefix decrement, returns value after decrement
 int result = -result; // unary negation, changes the sign of the value
 
 // Comparison Operators
@@ -210,8 +210,8 @@ bool result = 1 >= 2; // greater than or equal to
 auto result = 1 <=> 2; // three way comparison
 
 // Logical Operators
-bool result = true && false, true and false; // logical AND
-bool result = true || false, true or false; // logical OR
+bool result = true && false, true and false; // logical AND, doesn't evaluate second operand if the first one is false
+bool result = true || false, true or false; // logical OR, doesn't evaluate second operand if the first one is true
 bool result = !true, not true; // logical NOT
 
 // Bitwise Operators
