@@ -490,14 +490,12 @@ if !consteval { // if !consteval statement, the inverse of consteval
 }
 
 // Switch-Case
-switch (5) { // switch case statment, condition must be an integral type or enum 
-	case 3: { // case statement, braces are optional if the body has no declaration
+switch (5) { // switch statment, will execute case statements that match the condition which must be of integral type or enum 
+	case 4: // empty case statement, will fall through to the next case statement
+	case 3: { // case statement, {} are optional if the body doesn't have any declarations
 		// code will be executed from here to the end of the switch
 		break; // break statement, optional, will exit the switch statement
 	}
-	case 4:
-	case 5: // multiple case statements, can be used to group cases together
-	break; // break statement can appear anywhere in the switch statement
 
 	default: {} // default case, optional, will be executed if no case matches, can appear anywhere in the switch statement
 }
@@ -521,34 +519,34 @@ int function() { return 5; } // return statement with value, exits the function 
 // =====================================
 
 // For Loop
-for (int x = 0; x < 10; ++x) { // for loop, braces are optional if the body has only one statement
-	// code will be executed 10 times
-	if (x == 5) 
-		break; // break statement, exits the loop
-	if (x == 3)
-		continue; // continue statement, skips the rest of the loop body and goes to the next iteration
+for (int x = 0; x < 10; ++x) { // for loop, first statement initializes any number of variables separated by commas, continues excuting for block while the condition in second statement is true, and executes the third statement at the end of each iteration
+	// for block
+	break; // break statement, exits the loop
+	continue; // continue statement, skips the rest of the loop body and goes to the next iteration
 }
-for (;;); // both initializer, condition and increment are optional, this will create an infinite loop
+for (;;); // all statements are optional, if the condition is omitted, it is assumed to be true
 
 // Range For Loop
-for (auto& element : array) { // range for loop, iterates over the elements returned by the iterator object, parentheses are optional if the body has only one statement
-	// code will be executed for each element in the array
+for (auto& element : array) { // range for loop, iterates over the elements returned by the iterator object, {} are optional if the body has only one statement
+	// range for block
+	break; // break statement, exits the loop
+	continue; // continue statement, skips the rest of the loop body and goes to the next iteration
 }
 for (char array[5] = {1}; int& i : array); // range for loop with initializer
 
 // While Loop
 while (true) { // while loop, braces are optional if the body has only one statement, will continue executing as long as the condition is true
-	// code will be executed as long as the condition is true
-	if (false)
-		break; // break statement, exits the loop
-	if (true)
-		continue; // continue statement, skips the rest of the loop body and goes to the next iteration
+	// while block
+	break; // break statement, exits the loop
+	continue; // continue statement, skips the rest of the loop body and goes to the next iteration
 }
 
 // Do-While Loop
-do { // do-while loop, braces are optional if the body has only one statement
-	// code will be executed at least once
-} while (true); // condition is checked after the loop body
+do { // do-while loop, same as while loop except the condition is checked after the loop body, {} are optional if the body has only one statement
+	// do while block
+	break; // break statement, exits the loop
+	continue; // continue statement, skips the rest of the loop body and goes to the next iteration
+} while (true); // do while condition, must be followed by a semicolon
 
 // Enumerating Expansion Statement
 template for (auto&& x : {1, "string", my_struct}) { // expansion statement, unrolls the loop at compile time, elements in the {} list can be lvalue or rvalue of any type, or parameter pack expansion

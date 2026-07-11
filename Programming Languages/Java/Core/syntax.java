@@ -1,4 +1,8 @@
-// continue from : https://docs.oracle.com/javase/tutorial/java/nutsandbolts/arrays.html
+https://dev.java/learn/
+// excpetions
+// lambda expressions
+// interfaces
+// match statement
 
 
 // ==============================
@@ -37,6 +41,8 @@ long long_var; // 64-bit signed integeral type, default field value is 0L
 float float_var; // 32-bit floating point type, default field value is 0.0f
 double double_var; // 64-bit floating point type, default field value is 0.0d
 char char_var; // 16-bit Unicode character type, default field value is '\u0000'
+int[] array_var; // array type, can hold multiple values of the same type
+
 
 // Declaration
 int x; // single declaration
@@ -115,11 +121,85 @@ int ternary = (x > y) ? x : y; // ternary operator, returns value after ? if con
 
 boolean instance_of = new Object() instanceof Object; // instance of operator, returns true if the object is an instance of a class, a parent of that class, or implements an interface
 
+(int) 3.14; // type casting, can be used to convert between primitive and user defined types if compatible
+
 
 
 // ========================================
 // ========== CONTROL STATEMENTS ==========
 // ========================================
 
+// If statement
+if (x > y) { // if statement, will execute the if block if the condition if true, {} are optional for single statement blocks 
+    // if block
+} else if (x == y) { // else if statement, optional, it's just an else statement with a single if statement 
+    // else if block
+} else { // else statement, optional, will execute the else block if the if condition is false, {} are optional for single statement blocks
+    // else block
+}
+
+// Switch-Case
+switch (5) { // switch statment, will execute case statements that match the value of the condition which must be of byte, short, char, int, their corresponding wrapper classes, enum types, String
+    case 4: // empty case statement, will fall through to the next case statement
+    case 3: // case statement, can contain any number and type of statements
+		// code will be executed from here to the end of the switch
+		break; // break statement, optional, will exit the switch statement
+
+	default: // default case, will be executed if no case matches, can appear anywhere in the switch statement
+}
 
 
+
+// =====================================
+// ========== LOOP STATEMENTS ==========
+// =====================================
+
+// For loop
+for (int i = 0; i < 10; i++) { // for loop, initializes a variable, continues excuting for block while the condition is true, and increments the variable at the end of each iteration, {} are optional for single statement blocks
+    // for loop block
+    break; // break statement, will exit the loop
+    continue; // continue statement, will skip the rest of the loop body and go to the next iteration
+}
+for (;true;) {} // first and third statements are optional
+
+// Range For loop
+for (int element : array_var) { // range for loop, iterates over the elements of an iterable object and assigns them to a variable, {} are optional for single statement blocks
+    // range for loop block
+    break; // break statement, will exit the loop
+    continue; // continue statement, will skip the rest of the loop body and go to the next iteration
+}
+
+// While loop
+while (true) { // while loop, continues excuting while block as long as the condition is true, {} are optional for single statement blocks
+    // while loop block
+    break; // break statement, will exit the loop
+    continue; // continue statement, will skip the rest of the loop body and go to the next iteration
+    
+}
+
+// =============================
+// ========== CLASSES ==========
+// =============================
+
+public class MyClass { // class declaration, can be declared as public (in which case can only be one and must be in a file with the same name), private, protected, or none (no modifier)
+    int x; // field declaration
+    public MyClass() { // constructor declaration, has the same name as the class and no return type
+        this.x = 0; // this keyword refers to the current instance of the class, can be omitted when accesing fields and methods if there names are not shadowed by local variables
+    }
+    int myMethod(int a, int b) { // method declaration, can be declared as public, private, protected, or none (no modifier), can have any return type, or void if it doesn't return anything, and any number of parameters including none
+        // method body
+        return a + b; // return statement, can appear anywhere in the method body, must have at least one unconditional return statement reachable from any point in the body
+    }
+    short myMethod() { // method overloading, declares another version of the method with the same name with different parameters and or return type, correct method will be called based on the arguments passed to the method
+        // method body
+        return (short) (a - b);
+    }
+    final int myFinalMethod() {} // final method, cannot be overridden by any subclass
+}
+class MySubClass extends MyClass { // class inheritance, can only extend one class, will inherit all fields and methods from the parent class
+    @Override // overried annotation, must be used when overriding a method from the parent class
+    int myMethod(int a, int b) { // method overriding, must have same name, return type, and parameters, allows modifying the body of the parent method    
+        return super.myMethod(a, b) * 2; // super keyword refers to the parent class, can be used to access fields and methods from the parent class
+    }
+}
+final class MyFinalClass {} // final class, cannot be extended by any other class
