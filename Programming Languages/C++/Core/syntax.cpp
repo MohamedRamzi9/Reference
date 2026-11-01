@@ -1165,7 +1165,7 @@ u8identifier_of(info); // returns the identifier of the entity as a char8_t u8st
 display_string_of(info); // returns the display name of the entity as a string_view if it has one, otherwise throws an exception
 u8display_string_of(info); // returns the display name of the entity as a char8_t u8string_view if it has one, otherwise throws an exception
 source_location_of(info); // returns the source location of the entity as a std::source_location 
-type_of(info); // ns a reflection of the type of the entity if it has one, otherwise throws an exception
+type_of(info); // returns a reflection of the type of the entity if it has one, otherwise throws an exception
 object_of(info); 🔴🔴🔴
 constant_of(info); 🔴🔴🔴
 parent_of(info); // returns a reflection of the enclosing parent entity that contains the definition of the entity
