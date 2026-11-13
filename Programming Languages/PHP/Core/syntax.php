@@ -28,6 +28,7 @@ echo "html conetent"; // outputs html content in the place where the echo is use
 
 // Declaration
 $variable = "value"; // variable declaration, variables can be of any type
+define("constant", 234); // constant declaration, its value can't be changed, can't be accessed from outside its scope of declaration
 $hashtable = array("key" => "value", "key2" => 2); // hashtable variable declaration, each key must be unique and must be a string, integer, or boolean, values are ordered by their insertion order
 $array = array(1, "string", 3); // hashtable with default integer keys starting from 0
 
@@ -38,9 +39,14 @@ $float = 4.5; // float literal
 $bool = true; $bool = false; // boolean literals
 $null = null; // null literal
 
+// Variable usage
+echo $variable; // variable access
+echo constant; // constant access
+
 // Checking functions
 $isset = isset($variable); // isset function, returns true if (the variable is declared or a hashtable key exists) and its value is not null
 $empty = empty($variable); // empty function, returns true if the variable is not declared, or its value is false, null, empty string, empty hashtable, 0
+
 
 
 // ===============================
@@ -136,6 +142,49 @@ while (true) { // while loop, executes the code inside the while block as long a
 
 
 
+// ===============================
+// ========== FUNCTIONS ==========
+// ===============================
+
+function func($param1, int $param2, $param3=8) { // function declaration, can have any number of parameters, with optional default values and explicit type,
+    return "hello wolrd"; // return statement, returns value to the caller and exits the function
+}
+
+func(12, 38); // function call, default values of parameters are used when not passed in function call,
+
+
+
+// =============================
+// ========== CLASSES ==========
+// =============================
+
+class MyClass { // class declaration, can have any name other than Class
+    /* access modifiers, used at the beginning of property and method declaration
+    - private : can only be accessed inside the class 
+    - protected : can only be accessed inside the class and any derived classes
+    - public : can be accessed from inside and outside the class
+    - no moifier : equivilant to public
+    */
+    private $property = 4; // property declaration, default value is optional and used when proprerty is not initialized in constructor, 
+
+    function __construct($value) { // constructor declaration, can have parameters like global functions
+        $this->property = $value; // '$this' refers to current object, used to access propertiess and methods, properties are accessed through '$this' without $ 
+    }
+    function get_property($name) { // method declaration, can have parameters like global functions
+        return $this->property;
+    }
+}
+$object = new MyClass("value"); // class instanciation, calls the constructor
+$object->get_property(); // accessing properties and methods of object, properties and methods are accessed without $
+
+
+
+// ==============================
+// ========== DECLARES ==========
+// ==============================
+
+
+
 // ======================================
 // ========== GLOBAL VARIABLES ==========
 // ======================================
@@ -145,5 +194,8 @@ $_POST; // post super global variable, a hashtable that contains post data from 
 
 
 
+// ==============================
+// ========== REQUIRES ==========
+// ==============================
 
 ?>
