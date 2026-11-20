@@ -179,12 +179,6 @@ $object->get_property(); // accessing properties and methods of object, properti
 
 
 
-// ==============================
-// ========== DECLARES ==========
-// ==============================
-
-
-
 // ======================================
 // ========== GLOBAL VARIABLES ==========
 // ======================================
@@ -194,8 +188,19 @@ $_POST; // post super global variable, a hashtable that contains post data from 
 
 
 
-// ==============================
-// ========== REQUIRES ==========
-// ==============================
+// =========================================
+// ========== INCLUDE AND REQUIRE ==========
+// =========================================
+
+// Include
+$return = include "file.php"; // include statement, path must be either relative to this file, or absolute, or be defined in 'include_path' variable, or be a URL to a PHP file server
+    // processes the specified file which, will have access to all parent variables accessible from the scope where the include statement is executed, 
+    // also includes all global variables from the included file to this file
+    // returns false and raises a warning on failure, otherwise 1 by default or the value returned via the script on success
+$return = include_once "file.php"; // same as include, except include the file only once and returns true if it was already included
+
+// Require
+$return = require "file.php"; // same as include except raises an error on failure
+$return = require_once "file.php"; // same as require_once except include the file only once and returns true if it was already included
 
 ?>
